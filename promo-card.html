@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 600px; height: 600px;
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .card {
+    width: 560px; height: 560px;
+    background: linear-gradient(160deg, #ffffff 0%, #f0f4ff 100%);
+    border-radius: 24px;
+    padding: 48px 40px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  }
+  .accent {
+    position: absolute; top: 0; right: 0;
+    width: 180px; height: 180px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 0 24px 0 180px;
+    opacity: 0.8;
+  }
+  .accent2 {
+    position: absolute; bottom: 0; left: 0;
+    width: 120px; height: 120px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 0 120px 0 24px;
+    opacity: 0.6;
+  }
+  .content { position: relative; z-index: 1; }
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; font-size: 13px; font-weight: 600;
+    padding: 6px 16px; border-radius: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  h1 {
+    font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, #1a1a2e, #4a4a8a);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  .services {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .tag {
+    background: #f0f4ff;
+    color: #4a4a8a; font-size: 14px; font-weight: 600;
+    padding: 8px 14px; border-radius: 10px;
+  }
+  .features {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-bottom: 28px;
+  }
+  .feat {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: #444;
+  }
+  .feat-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .fi1 { background: #e8f5e9; } .fi2 { background: #fff3e0; } .fi3 { background: #e3f2fd; } .fi4 { background: #fce4ec; }
+  .bottom { display: flex; align-items: center; justify-content: space-between; }
+  .price { font-size: 32px; font-weight: 800; color: #667eea; }
+  .price small { font-size: 14px; color: #999; font-weight: 400; }
+  .contact {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border: none;
+    padding: 12px 28px; border-radius: 14px;
+    font-size: 16px; font-weight: 700;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="accent"></div>
+  <div class="accent2"></div>
+  <div class="content">
+    <div class="badge">计算机专业大学生 | 个人接单</div>
+    <h1>定制网页开发<br>手写代码 · 不套模板</h1>
+    <div class="services">
+      <span class="tag">个人主页</span>
+      <span class="tag">企业官网</span>
+      <span class="tag">产品落地页</span>
+      <span class="tag">H5营销页</span>
+      <span class="tag">响应式适配</span>
+    </div>
+    <div class="features">
+      <div class="feat"><span class="feat-icon fi1">📝</span>手写 HTML/CSS/JS</div>
+      <div class="feat"><span class="feat-icon fi2">📱</span>手机电脑全适配</div>
+      <div class="feat"><span class="feat-icon fi3">⚡</span>1-3 天交付</div>
+      <div class="feat"><span class="feat-icon fi4">🛡</span>交付后免费改 2 次</div>
+    </div>
+    <div class="bottom">
+      <div class="price">¥128 <small>起/页</small></div>
+      <button class="contact">📩 私聊询价</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

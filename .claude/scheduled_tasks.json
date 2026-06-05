@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {
+      "id": "960d2e21",
+      "cron": "3,8,13,18,23,28,33,38,43,48,53,58 * * * *",
+      "prompt": "【飞书巡回】1. Bash: node /d/Cursor/feishu-bridge.mjs check 2. NEW→Read pending.txt+回复 send。3. NONE→不输出",
+      "createdAt": 1780636546382,
+      "lastFiredAt": 1780654423702,
+      "recurring": true,
+      "createdBySessionId": "7ef7dda7-ec88-4075-a929-3929c846d171",
+      "createdByPid": 22392
+    }
+  ]
+}
