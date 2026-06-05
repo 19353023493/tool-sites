@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JSON在线格式化工具 — 免费JSON校验/压缩/转CSV/树形查看</title>
+<meta name="description" content="免费在线JSON工具集：格式化美化、压缩、校验语法、JSON转CSV表格、树形结构查看。开发者必备，纯浏览器端处理。">
+<meta name="keywords" content="JSON格式化,JSON校验,JSON压缩,JSON转CSV,在线JSON工具,JSON美化,JSON parser">
+<link rel="canonical" href="https://json-tools.vercel.app">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg-card:#13131a;--bg-input:#1a1a24;
+  --text:#e4e4e7;--text-muted:#71717a;--accent:#6366f1;
+  --accent-hover:#4f46e5;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+  --radius:10px;
+}
+body{font-family:'JetBrains Mono','Fira Code','PingFang SC','Microsoft YaHei',monospace;background:var(--bg);color:var(--text);min-height:100vh}
+/* Nav */
+nav{background:var(--bg-card);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 24px;display:flex;align-items:center;gap:20px}
+nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;font-family:'PingFang SC','Microsoft YaHei',sans-serif}
+nav .brand:hover{opacity:.8}
+nav .links{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+nav .links a{color:var(--text-muted);text-decoration:none;font-size:12px;padding:5px 10px;border-radius:6px;transition:all .2s;font-family:'PingFang SC','Microsoft YaHei',sans-serif}
+nav .links a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+nav .links a.here{color:var(--accent);background:rgba(99,102,241,.1)}
+header{padding:24px;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}
+header h1{font-size:24px;font-weight:700;color:var(--accent)}
+header p{color:var(--text-muted);margin-top:6px;font-size:13px}
+.ad-banner{max-width:960px;margin:12px auto;padding:10px;background:var(--bg-card);border-radius:var(--radius);text-align:center;color:var(--text-muted);font-size:12px;border:1px dashed rgba(255,255,255,.08)}
+main{max-width:960px;margin:0 auto;padding:20px}
+/* Toolbar */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.toolbar button{padding:8px 16px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:var(--bg-card);color:var(--text);cursor:pointer;font-size:13px;font-family:inherit;transition:all .2s}
+.toolbar button:hover{border-color:var(--accent)}
+.toolbar button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.toolbar .sep{width:1px;background:rgba(255,255,255,.08);margin:0 4px}
+/* Editor */
+.editor-container{display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:420px}
+@media(max-width:700px){.editor-container{grid-template-columns:1fr}}
+.panel{background:var(--bg-card);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.panel-header{padding:10px 16px;font-size:12px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center}
+.panel-header .count{font-size:11px;color:var(--text-muted)}
+textarea{flex:1;width:100%;padding:16px;border:none;background:var(--bg-input);color:var(--text);font-family:inherit;font-size:13px;line-height:1.6;resize:none;outline:none;tab-size:2}
+textarea:focus{box-shadow:inset 0 0 0 1px var(--accent)}
+/* Error */
+.error-msg{display:none;padding:10px 16px;background:rgba(239,68,68,.1);color:var(--red);font-size:12px;border-top:1px solid rgba(239,68,68,.2)}
+.error-msg.show{display:block}
+/* Tree view */
+.tree-view{display:none;flex:1;overflow:auto;padding:16px;font-size:13px;line-height:1.8}
+.tree-view.show{display:block}
+.tree-view .key{color:#a78bfa}
+.tree-view .string{color:#34d399}
+.tree-view .number{color:#f59e0b}
+.tree-view .boolean{color:#60a5fa}
+.tree-view .null{color:#ef4444}
+.tree-view .bracket{color:#71717a}
+.tree-view .toggle{cursor:pointer;user-select:none;margin-right:4px;color:var(--text-muted)}
+/* CSV table */
+.csv-table{display:none;flex:1;overflow:auto}
+.csv-table.show{display:block}
+.csv-table table{width:100%;border-collapse:collapse;font-size:12px}
+.csv-table th{background:var(--bg-input);padding:8px 12px;text-align:left;font-weight:600;position:sticky;top:0;z-index:1;border-bottom:2px solid var(--accent)}
+.csv-table td{padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.04);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.csv-table tr:hover td{background:rgba(99,102,241,.05)}
+/* Stats bar */
+.stats-bar{display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--text-muted);flex-wrap:wrap}
+.stats-bar span{padding:4px 10px;background:var(--bg-card);border-radius:4px}
+footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid rgba(255,255,255,.05);margin-top:32px}
+footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="brand">🧰 在线工具站</a>
+  <div class="links">
+    <a href="../image-compressor/">🖼️ 图片压缩</a>
+    <a href="../json-formatter/" class="here">{ } JSON工具</a>
+    <a href="../color-palette/">🎨 配色生成</a>
+  </div>
+</nav>
+
+<header>
+  <h1>{ } JSON 在线工具</h1>
+  <p>格式化 · 压缩 · 校验 · 转CSV · 树形查看 — 纯浏览器端，数据不上传</p>
+</header>
+
+<div class="ad-banner">📢 广告位 — 百度联盟</div>
+
+<main>
+  <div class="toolbar">
+    <button class="active" data-mode="format" onclick="setMode('format')">✨ 格式化</button>
+    <button data-mode="minify" onclick="setMode('minify')">📦 压缩</button>
+    <button data-mode="validate" onclick="setMode('validate')">✓ 校验</button>
+    <button data-mode="tree" onclick="setMode('tree')">🌳 树形查看</button>
+    <button data-mode="csv" onclick="setMode('csv')">📊 JSON→CSV</button>
+    <span class="sep"></span>
+    <button onclick="copyOutput()">📋 复制结果</button>
+    <button onclick="clearAll()">🗑 清空</button>
+    <button onclick="loadSample()">📥 示例数据</button>
+  </div>
+
+  <div class="editor-container">
+    <div class="panel">
+      <div class="panel-header">
+        <span>📝 输入 JSON</span>
+        <span class="count" id="inputCount">0 字符</span>
+      </div>
+      <textarea id="input" placeholder='粘贴 JSON 到这里... 例如: {"name":"张三","age":25}'></textarea>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span id="outputLabel">✨ 格式化输出</span>
+        <span class="count" id="outputCount">0 字符</span>
+      </div>
+      <textarea id="output" readonly placeholder="处理结果将显示在这里..."></textarea>
+      <div class="tree-view" id="treeView"></div>
+      <div class="csv-table" id="csvTable"></div>
+    </div>
+  </div>
+
+  <div class="stats-bar" id="statsBar"></div>
+</main>
+
+<div class="ad-banner">📢 广告位 — 百度联盟</div>
+
+<footer>
+  <p>© 2025 JSON在线工具 · 数据不上传服务器 · 开发者必备</p>
+  <p style="margin-top:6px"><a href="../privacy.html">🔒 隐私政策</a> · <a href="../image-compressor/">图片压缩</a> · <a href="../color-palette/">配色生成</a> · <a href="../index.html">更多工具</a></p>
+</footer>
+
+<script>
+let currentMode = 'format';
+let parsedData = null;
+
+const $=s=>document.querySelector(s);
+const input=$('#input'),output=$('#output'),errorMsg=$('#errorMsg');
+const treeView=$('#treeView'),csvTable=$('#csvTable');
+
+input.addEventListener('input', processJSON);
+input.addEventListener('paste', () => setTimeout(processJSON, 10));
+
+function processJSON() {
+  const val = input.value.trim();
+  $('#inputCount').textContent = val.length + ' 字符';
+  errorMsg.classList.remove('show');
+  hideAllOutputs();
+
+  if (!val) {
+    output.value = '';
+    $('#outputCount').textContent = '0 字符';
+    $('#statsBar').innerHTML = '';
+    parsedData = null;
+    return;
+  }
+
+  try {
+    parsedData = JSON.parse(val);
+    switch(currentMode) {
+      case 'format': formatJSON(); break;
+      case 'minify': minifyJSON(); break;
+      case 'validate': validateJSON(); break;
+      case 'tree': renderTree(); break;
+      case 'csv': renderCSV(); break;
+    }
+    updateStats();
+  } catch(e) {
+    errorMsg.textContent = '❌ JSON 语法错误: ' + e.message;
+    errorMsg.classList.add('show');
+    output.value = '';
+    $('#outputCount').textContent = '—';
+    parsedData = null;
+  }
+}
+
+function hideAllOutputs() {
+  output.style.display = 'block';
+  treeView.classList.remove('show');
+  csvTable.classList.remove('show');
+  output.value = '';
+}
+
+function formatJSON() {
+  hideAllOutputs();
+  output.style.display = 'block';
+  output.value = JSON.stringify(parsedData, null, 2);
+  $('#outputCount').textContent = output.value.length + ' 字符';
+}
+
+function minifyJSON() {
+  hideAllOutputs();
+  output.style.display = 'block';
+  output.value = JSON.stringify(parsedData);
+  $('#outputCount').textContent = output.value.length + ' 字符';
+}
+
+function validateJSON() {
+  hideAllOutputs();
+  output.style.display = 'block';
+  const type = Array.isArray(parsedData) ? '数组 (Array)' : typeof parsedData === 'object' ? '对象 (Object)' : typeof parsedData;
+  const keys = typeof parsedData === 'object' && parsedData ? Object.keys(parsedData).length : 0;
+  output.value = `✅ JSON 格式正确！\n\n类型: ${type}\n${keys ? '键数量: ' + keys : ''}\n大小: ${(new Blob([input.value]).size)} bytes`;
+  $('#outputCount').textContent = '—';
+}
+
+function renderTree() {
+  output.style.display = 'none';
+  treeView.classList.add('show');
+  treeView.innerHTML = '<div style="padding-left:0">' + buildTreeNode(parsedData, '', true) + '</div>';
+}
+
+function buildTreeNode(obj, key, isLast) {
+  if (obj === null) return `<span class="key">${key ? '"' + key + '"' : ''}</span><span class="bracket">:</span> <span class="null">null</span>\n`;
+  if (typeof obj === 'boolean') return `<span class="key">${key ? '"' + key + '"' : ''}</span><span class="bracket">:</span> <span class="boolean">${obj}</span>\n`;
+  if (typeof obj === 'number') return `<span class="key">${key ? '"' + key + '"' : ''}</span><span class="bracket">:</span> <span class="number">${obj}</span>\n`;
+  if (typeof obj === 'string') return `<span class="key">${key ? '"' + key + '"' : ''}</span><span class="bracket">:</span> <span class="string">"${obj.replace(/</g,'&lt;')}"</span>\n`;
+
+  const isArr = Array.isArray(obj);
+  const entries = isArr ? obj.map((v,i) => [i, v]) : Object.entries(obj);
+  const bracket = isArr ? ['[',']'] : ['{','}'];
+  const id = 'tree_' + Math.random().toString(36).slice(2,8);
+  let html = `<span class="toggle" onclick="toggleNode('${id}')">▼</span><span class="key">${key ? '"' + key + '"' : ''}</span><span class="bracket">${key ? ': ' : ''}${bracket[0]}</span><span class="bracket"> (${entries.length})</span>\n`;
+  html += `<div id="${id}" style="padding-left:20px">`;
+  entries.forEach(([k, v], i) => {
+    html += buildTreeNode(v, isArr ? k : k, i === entries.length - 1);
+  });
+  html += `</div><span class="bracket">${bracket[1]}</span>\n`;
+  return html;
+}
+
+function toggleNode(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const toggle = el.previousElementSibling;
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    toggle.textContent = '▼';
+  } else {
+    el.style.display = 'none';
+    toggle.textContent = '▶';
+  }
+}
+
+function renderCSV() {
+  output.style.display = 'none';
+  csvTable.classList.add('show');
+
+  const arr = Array.isArray(parsedData) ? parsedData : [parsedData];
+  if (!arr.length || typeof arr[0] !== 'object' || arr[0] === null) {
+    csvTable.innerHTML = '<div style="padding:16px;color:#ef4444">⚠️ 数据必须是对象数组才能转CSV，例如 [{...}, {...}]</div>';
+    return;
+  }
+
+  const keys = [...new Set(arr.flatMap(o => Object.keys(o)))];
+  let html = '<table><thead><tr>' + keys.map(k => `<th>${k}</th>`).join('') + '</tr></thead><tbody>';
+  arr.forEach(row => {
+    html += '<tr>' + keys.map(k => `<td>${row[k] != null ? String(row[k]).replace(/</g,'&lt;') : ''}</td>`).join('') + '</tr>';
+  });
+  html += '</tbody></table>';
+  csvTable.innerHTML = html;
+}
+
+function updateStats() {
+  if (!parsedData) return;
+  const type = Array.isArray(parsedData) ? '数组' : typeof parsedData === 'object' ? '对象' : typeof parsedData;
+  const keys = typeof parsedData === 'object' && parsedData ? Object.keys(parsedData).length : 0;
+  const bytes = new Blob([input.value]).size;
+  const deep = getDepth(parsedData);
+  $('#statsBar').innerHTML = `<span>📦 类型: ${type}</span><span>🔑 键数: ${keys}</span><span>📏 深度: ${deep}</span><span>💾 大小: ${formatBytes(bytes)}</span>`;
+}
+
+function getDepth(obj, d=0) {
+  if (obj == null || typeof obj !== 'object') return d;
+  let max = d + 1;
+  for (const v of Object.values(obj)) max = Math.max(max, getDepth(v, d + 1));
+  return max;
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  $('#outputLabel').textContent = ({
+    format:'✨ 格式化输出',minify:'📦 压缩输出',validate:'✓ 校验结果',tree:'🌳 树形查看',csv:'📊 CSV 表格'
+  })[mode];
+  document.querySelectorAll('.toolbar button[data-mode]').forEach(b => b.classList.remove('active'));
+  const target = document.querySelector(`.toolbar button[data-mode="${mode}"]`);
+  if (target) target.classList.add('active');
+  processJSON();
+}
+
+function copyOutput() {
+  const content = currentMode === 'tree' ? treeView.textContent : output.value;
+  if (!content) return;
+  navigator.clipboard.writeText(content).then(() => showToast('✅ 已复制到剪贴板'));
+}
+
+function clearAll() {
+  input.value = '';
+  output.value = '';
+  parsedData = null;
+  hideAllOutputs();
+  $('#inputCount').textContent = '0 字符';
+  $('#outputCount').textContent = '0 字符';
+  $('#statsBar').innerHTML = '';
+  errorMsg.classList.remove('show');
+}
+
+function loadSample() {
+  input.value = JSON.stringify({
+    "name": "张三",
+    "age": 28,
+    "email": "zhangsan@example.com",
+    "skills": ["JavaScript", "Python", "SQL"],
+    "address": {"city": "北京", "district": "朝阳区"},
+    "projects": [
+      {"title": "电商平台", "status": "completed", "stars": 128},
+      {"title": "数据分析工具", "status": "active", "stars": 56}
+    ]
+  }, null, 2);
+  processJSON();
+}
+
+function formatBytes(b) { return b < 1024 ? b + ' B' : b < 1048576 ? (b/1024).toFixed(1)+' KB' : (b/1048576).toFixed(2)+' MB'; }
+function showToast(msg) { /* simple toast */ const e=document.createElement('div');e.textContent=msg;e.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;padding:10px 24px;border-radius:20px;font-size:14px;z-index:999';document.body.appendChild(e);setTimeout(()=>e.remove(),2000); }
+
+// Init with sample data
+loadSample();
+</script>
+</body>
+</html>

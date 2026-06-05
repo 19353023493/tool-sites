@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>在线图片压缩工具 — 免费压缩PNG/JPG/WebP，不损画质</title>
+<meta name="description" content="免费在线图片压缩工具，支持PNG、JPG、WebP格式，智能压缩不损画质。纯浏览器端处理，图片不上传服务器，安全放心。">
+<meta name="keywords" content="图片压缩,在线图片压缩,PNG压缩,JPG压缩,WebP压缩,免费压缩,图片优化">
+<link rel="canonical" href="https://image-compress.vercel.app">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"在线图片压缩工具","url":"https://image-compress.vercel.app","description":"免费在线图片压缩工具，纯浏览器端处理","applicationCategory":"Multimedia","operatingSystem":"All"}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--bg-card:#1e293b;--bg-input:#334155;
+  --text:#f1f5f9;--text-muted:#94a3b8;--accent:#3b82f6;
+  --accent-hover:#2563eb;--green:#22c55e;--red:#ef4444;
+  --radius:12px;--shadow:0 4px 24px rgba(0,0,0,.3);
+}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+/* Nav */
+nav{background:var(--bg-card);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px}
+nav .brand:hover{opacity:.8}
+nav .links{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+nav .links a{color:var(--text-muted);text-decoration:none;font-size:12px;padding:5px 10px;border-radius:6px;transition:all .2s}
+nav .links a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+nav .links a.here{color:var(--accent);background:rgba(99,102,241,.1)}
+/* Header */
+header{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);text-align:center}
+header h1{font-size:28px;font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--text-muted);margin-top:6px;font-size:14px}
+/* Ad top */
+.ad-banner{max-width:800px;margin:16px auto;padding:12px 24px;background:var(--bg-card);border-radius:var(--radius);text-align:center;color:var(--text-muted);font-size:13px;border:1px dashed rgba(255,255,255,.1)}
+/* Main */
+main{max-width:800px;margin:0 auto;padding:24px}
+/* Upload zone */
+.upload-zone{border:2px dashed rgba(255,255,255,.15);border-radius:var(--radius);padding:48px 24px;text-align:center;cursor:pointer;transition:all .3s;background:var(--bg-card)}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:rgba(59,130,246,.05)}
+.upload-zone .icon{font-size:48px;margin-bottom:12px}
+.upload-zone .title{font-size:18px;font-weight:600;margin-bottom:4px}
+.upload-zone .sub{font-size:13px;color:var(--text-muted)}
+.upload-zone input{display:none}
+/* Preview area */
+.preview-area{display:none;margin-top:20px}
+.preview-area.show{display:block}
+.file-info{display:flex;align-items:center;gap:16px;padding:16px;background:var(--bg-card);border-radius:var(--radius);flex-wrap:wrap}
+.file-info .thumb{width:80px;height:80px;border-radius:8px;object-fit:cover;background:var(--bg-input)}
+.file-info .detail{flex:1;min-width:150px}
+.file-info .name{font-weight:600;font-size:15px;word-break:break-all}
+.file-info .size{color:var(--text-muted);font-size:13px;margin-top:4px}
+.file-info .remove-btn{background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-muted);padding:6px 16px;border-radius:20px;cursor:pointer;font-size:13px}
+.file-info .remove-btn:hover{color:var(--red);border-color:var(--red)}
+/* Controls */
+.controls{margin-top:20px;background:var(--bg-card);border-radius:var(--radius);padding:20px}
+.controls label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+.controls input[type=range]{width:100%;accent-color:var(--accent)}
+.controls .range-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-top:4px}
+.controls .format-select{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.controls .format-btn{flex:1;min-width:70px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:transparent;color:var(--text);cursor:pointer;font-size:14px;transition:all .2s}
+.controls .format-btn:hover,.controls .format-btn.active{border-color:var(--accent);background:rgba(59,130,246,.1)}
+/* Result */
+.result-area{display:none;margin-top:20px}
+.result-area.show{display:block}
+.result-card{background:var(--bg-card);border-radius:var(--radius);padding:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.result-card .preview-img{width:120px;height:120px;border-radius:8px;object-fit:cover;background:var(--bg-input)}
+.result-card .stats{flex:1}
+.result-card .stats .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.result-card .stats .row span:first-child{color:var(--text-muted);font-size:14px}
+.result-card .stats .row span:last-child{font-weight:600;font-size:14px}
+.result-card .stats .saved{color:var(--green)}
+.download-btn{display:block;width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:16px;font-weight:600;cursor:pointer;margin-top:16px;transition:background .2s}
+.download-btn:hover{background:var(--accent-hover)}
+/* Compress button */
+.compress-btn{display:block;width:100%;padding:14px;background:var(--green);color:#000;border:none;border-radius:var(--radius);font-size:16px;font-weight:600;cursor:pointer;margin-top:16px;transition:all .2s}
+.compress-btn:hover{opacity:.9}
+.compress-btn:disabled{opacity:.4;cursor:not-allowed}
+/* Footer */
+footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:13px;border-top:1px solid rgba(255,255,255,.06);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+/* Toast */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:12px 24px;border-radius:24px;font-weight:600;font-size:14px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="brand">🧰 在线工具站</a>
+  <div class="links">
+    <a href="../image-compressor/" class="here">🖼️ 图片压缩</a>
+    <a href="../json-formatter/">{ } JSON工具</a>
+    <a href="../color-palette/">🎨 配色生成</a>
+  </div>
+</nav>
+
+<header>
+  <h1>🖼️ 在线图片压缩工具</h1>
+  <p>纯浏览器端处理 · 图片不上传服务器 · 智能压缩不损画质</p>
+</header>
+
+<div class="ad-banner">📢 广告位 — 百度联盟（你的广告代码放这里）</div>
+
+<main>
+  <div class="upload-zone" id="uploadZone">
+    <div class="icon">📁</div>
+    <div class="title">点击上传或拖拽图片到此处</div>
+    <div class="sub">支持 PNG · JPG · WebP · 单张最大 20MB</div>
+    <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp">
+  </div>
+
+  <div class="preview-area" id="previewArea">
+    <div class="file-info" id="fileInfo"></div>
+    <div class="controls">
+      <label>压缩质量: <strong id="qualityLabel">80%</strong></label>
+      <input type="range" id="quality" min="10" max="100" value="80" step="5">
+      <div class="range-labels"><span>高压缩/小文件</span><span>高质量/大文件</span></div>
+      <div style="margin-top:16px">
+        <label>输出格式</label>
+        <div class="format-select" id="formatSelect">
+          <button class="format-btn active" data-format="auto">自动(保持原格式)</button>
+          <button class="format-btn" data-format="image/jpeg">JPG</button>
+          <button class="format-btn" data-format="image/png">PNG</button>
+          <button class="format-btn" data-format="image/webp">WebP</button>
+        </div>
+      </div>
+    </div>
+    <button class="compress-btn" id="compressBtn" disabled>🔧 开始压缩</button>
+    <div class="result-area" id="resultArea"></div>
+  </div>
+</main>
+
+<div class="ad-banner">📢 广告位 — 百度联盟（你的广告代码放这里）</div>
+
+<footer>
+  <p>© 2025 在线工具站 · 纯浏览器端处理，保障你的隐私安全</p>
+  <p style="margin-top:8px"><a href="../privacy.html">🔒 隐私政策</a> · <a href="../json-formatter/">JSON工具</a> · <a href="../color-palette/">配色生成</a> · <a href="../index.html">更多工具</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+let originalFile = null;
+let outputFormat = 'auto';
+
+// Upload handling
+const uploadZone = $('#uploadZone');
+const fileInput = $('#fileInput');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => {
+  if (fileInput.files.length) handleFile(fileInput.files[0]);
+});
+
+function handleFile(file) {
+  if (!file.type.match(/image\/(png|jpeg|webp)/)) {
+    showToast('❌ 仅支持 PNG / JPG / WebP 格式');
+    return;
+  }
+  if (file.size > 20 * 1024 * 1024) {
+    showToast('❌ 文件大小不能超过 20MB');
+    return;
+  }
+  originalFile = file;
+  renderFileInfo(file);
+  $('#previewArea').classList.add('show');
+  $('#compressBtn').disabled = false;
+  $('#resultArea').classList.remove('show');
+}
+
+function renderFileInfo(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    $('#fileInfo').innerHTML = `
+      <img class="thumb" src="${e.target.result}" alt="预览">
+      <div class="detail">
+        <div class="name">${file.name}</div>
+        <div class="size">原始大小: ${formatSize(file.size)} · ${file.type}</div>
+      </div>
+      <button class="remove-btn" onclick="resetAll()">✕ 移除</button>
+    `;
+  };
+  reader.readAsDataURL(file);
+}
+
+// Format selection
+$$('#formatSelect .format-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $$('#formatSelect .format-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    outputFormat = btn.dataset.format;
+  });
+});
+
+// Quality slider
+$('#quality').addEventListener('input', function() {
+  $('#qualityLabel').textContent = this.value + '%';
+});
+
+// Compress
+$('#compressBtn').addEventListener('click', async () => {
+  if (!originalFile) return;
+  const btn = $('#compressBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 压缩中...';
+
+  try {
+    const quality = parseInt($('#quality').value) / 100;
+    const img = await createImageBitmap(originalFile);
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const format = outputFormat === 'auto' ? originalFile.type : outputFormat;
+    const blob = await new Promise(r => canvas.toBlob(r, format, quality));
+    const url = URL.createObjectURL(blob);
+
+    const ratio = ((1 - blob.size / originalFile.size) * 100).toFixed(1);
+    const saved = originalFile.size - blob.size;
+
+    $('#resultArea').innerHTML = `
+      <div class="result-card">
+        <img class="preview-img" src="${url}" alt="压缩结果">
+        <div class="stats">
+          <div class="row"><span>原始大小</span><span>${formatSize(originalFile.size)}</span></div>
+          <div class="row"><span>压缩后</span><span>${formatSize(blob.size)}</span></div>
+          <div class="row"><span>节省</span><span class="saved">${formatSize(Math.abs(saved))} (${ratio}%)</span></div>
+          <div class="row"><span>输出格式</span><span>${format.split('/')[1].toUpperCase()}</span></div>
+          <div class="row"><span>分辨率</span><span>${img.width} × ${img.height}</span></div>
+        </div>
+      </div>
+      <button class="download-btn" onclick="downloadResult('${url}', '${originalFile.name.replace(/\.[^.]+$/, '')}_compressed.${format.split('/')[1]}')">⬇ 下载压缩后的图片</button>
+    `;
+    $('#resultArea').classList.add('show');
+    btn.textContent = '✅ 压缩完成，点击重新压缩';
+    btn.disabled = false;
+    showToast(`✅ 压缩完成！节省了 ${ratio}%`);
+  } catch(e) {
+    showToast('❌ 压缩失败: ' + e.message);
+    btn.textContent = '🔧 开始压缩';
+    btn.disabled = false;
+  }
+});
+
+function downloadResult(url, filename) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+}
+
+function resetAll() {
+  originalFile = null;
+  fileInput.value = '';
+  $('#previewArea').classList.remove('show');
+  $('#resultArea').classList.remove('show');
+  $('#compressBtn').disabled = true;
+  $('#compressBtn').textContent = '🔧 开始压缩';
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(2) + ' MB';
+}
+
+function showToast(msg) {
+  const toast = $('#toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
