@@ -3,3 +3,27 @@ node_modules/
 *.log
 dist/
 .cache/
+
+# Project files (not part of tool-sites deployment)
+.claude/
+feishu-bridge.mjs
+feishu-data/
+grok-gen.mjs
+nanobanana-gen.mjs
+nanobanana-script.js
+package.json
+package-lock.json
+promo-card.html
+screenshot-card.mjs
+tea-showcase/
+browser-extension/
+data-scraper.mjs
+demo-config.json
+demo-products.html
+promo-data-scraping.html
+scraped-data/
+宣传素材/
+闲鱼上架文案.md
+演示视频脚本-5分钟.md
+网页分类.xlsx
+新建文件夹/
