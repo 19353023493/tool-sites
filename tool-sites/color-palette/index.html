@@ -3,137 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>配色方案生成器 — AI智能配色 · 从图片提取 · 渐变生成 · 设计趋势色板</title>
-<meta name="description" content="免费在线配色工具：AI智能生成配色方案、从图片提取主色调、生成渐变色、浏览2025设计趋势色板。设计师必备。">
-<meta name="keywords" content="配色方案,调色板,颜色生成器,渐变生成,取色器,图片取色,设计配色,UI配色">
+<title>配色方案生成器 — AI配色 · 图片取色 · 渐变 · 趋势色板</title>
+<meta name="description" content="免费在线配色工具：AI智能配色、从图片提取主色调、CSS渐变生成、2025设计趋势色板。设计师必备。">
+<meta name="keywords" content="配色方案,调色板,颜色生成,渐变,取色器,设计配色">
 <link rel="canonical" href="https://color-palette.vercel.app">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0c0c14;--bg-card:#161625;--text:#e8e8ed;--text-muted:#8888a0;
-  --radius:12px;--accent:#7c3aed;
+  --bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;
+  --accent:#d4853c;--accent-hover:#b06d2e;
+  --radius:14px;--radius-sm:10px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.03);
 }
-body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-/* Nav */
-nav{background:var(--bg-card);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:Georgia,"Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");
+}
+nav{
+  position:sticky;top:0;z-index:100;background:rgba(249,248,246,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:14px 28px;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+nav .brand{font-weight:700;font-size:16px;color:var(--accent);text-decoration:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
 nav .brand:hover{opacity:.8}
-nav .links{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
-nav .links a{color:var(--text-muted);text-decoration:none;font-size:12px;padding:5px 10px;border-radius:6px;transition:all .2s}
-nav .links a:hover{color:var(--text);background:rgba(255,255,255,.04)}
-nav .links a.here{color:var(--accent);background:rgba(99,102,241,.1)}
-header{padding:24px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
-header h1{font-size:26px;font-weight:700;background:linear-gradient(135deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-header p{color:var(--text-muted);margin-top:6px;font-size:13px}
-.ad-banner{max-width:960px;margin:12px auto;padding:10px;background:var(--bg-card);border-radius:var(--radius);text-align:center;color:var(--text-muted);font-size:12px;border:1px dashed rgba(255,255,255,.08)}
-main{max-width:960px;margin:0 auto;padding:20px}
-/* Tab bar */
-.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg-card);border-radius:var(--radius);padding:4px}
-.tabs button{flex:1;padding:10px;border:none;border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer;font-size:14px;font-family:inherit;transition:all .2s}
+nav .links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+nav .links a{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--muted);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px;transition:all .2s}
+nav .links a:hover{color:var(--text);background:rgba(0,0,0,.03)}
+nav .links a.active{color:var(--accent);background:#fdf4ea;font-weight:600}
+main{max-width:960px;margin:0 auto;padding:28px 24px}
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:22px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px;box-shadow:var(--shadow)}
+.tabs button{flex:1;padding:11px;border:none;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;transition:all .2s}
 .tabs button:hover{color:var(--text)}
-.tabs button.active{background:var(--accent);color:#fff}
-/* Generator section */
+.tabs button.active{background:var(--accent);color:#fff;font-weight:600}
 .section{display:none}
 .section.active{display:block}
-/* AI palette */
-.ai-controls{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.ai-controls input{flex:1;min-width:200px;padding:12px 16px;background:var(--bg-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;outline:none}
-.ai-controls input:focus{border-color:var(--accent)}
-.ai-controls select{padding:12px 16px;background:var(--bg-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;cursor:pointer;outline:none}
-.ai-controls button{padding:12px 24px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
-.ai-controls button:hover{opacity:.9}
-/* Palette display */
-.palette{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:16px}
-.swatch{border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .2s;border:1px solid rgba(255,255,255,.06)}
-.swatch:hover{transform:translateY(-4px)}
-.swatch .color-block{height:100px;transition:filter .2s}
-.swatch:hover .color-block{filter:brightness(1.1)}
-.swatch .info{padding:10px;background:var(--bg-card);font-size:12px}
-.swatch .info .hex{font-weight:600;font-family:'JetBrains Mono',monospace}
-.swatch .info .role{color:var(--text-muted);margin-top:2px;font-size:11px}
-/* Extract from image */
-.extract-zone{border:2px dashed rgba(255,255,255,.1);border-radius:var(--radius);padding:40px;text-align:center;cursor:pointer;transition:all .3s;background:var(--bg-card)}
-.extract-zone:hover{border-color:var(--accent)}
+/* AI Palette */
+.ai-row{display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.ai-row input{flex:1;min-width:200px;padding:12px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;outline:none;box-shadow:var(--shadow)}
+.ai-row input:focus{border-color:var(--accent)}
+.ai-row select{padding:12px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;cursor:pointer;outline:none;box-shadow:var(--shadow)}
+.ai-row .btn-primary{padding:12px 28px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.ai-row .btn-primary:hover{background:var(--accent-hover)}
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}
+.swatch{border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;transition:transform .2s;border:1px solid var(--border);box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.swatch:hover{transform:translateY(-3px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.swatch .color-block{height:90px;display:flex;align-items:center;justify-content:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;font-weight:600}
+.swatch .info{padding:10px 12px;background:var(--surface);font-family:"SF Mono","Fira Code",monospace}
+.swatch .info .hex{font-weight:600;font-size:13px}
+.swatch .info .role{font-size:11px;color:var(--muted);margin-top:2px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.btn-row{display:flex;gap:8px}
+.btn-row button{padding:9px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;transition:all .2s}
+.btn-row button:hover{border-color:var(--accent)}
+/* Extract */
+.extract-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:48px;text-align:center;cursor:pointer;transition:all .25s;background:var(--surface);box-shadow:var(--shadow)}
+.extract-zone:hover{border-color:var(--accent);background:#fefcf8}
 .extract-zone input{display:none}
-.extract-zone .icon{font-size:40px;margin-bottom:8px}
-/* Image preview + colors */
-.extract-result{display:none;margin-top:16px}
+.extract-zone .icon{font-size:38px;margin-bottom:10px}
+.extract-zone .title{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;font-weight:600;margin-bottom:4px}
+.extract-zone .sub{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
+.extract-result{display:none;margin-top:18px}
 .extract-result.show{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 @media(max-width:600px){.extract-result.show{grid-template-columns:1fr}}
-.extract-preview img{width:100%;border-radius:var(--radius)}
-.extracted-colors{display:flex;flex-direction:column;gap:8px}
-.extracted-color{display:flex;align-items:center;gap:12px;padding:8px 16px;background:var(--bg-card);border-radius:8px}
-.extracted-color .dot{width:40px;height:40px;border-radius:8px;flex-shrink:0}
-.extracted-color .hex{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;flex:1}
-.extracted-color .pct{color:var(--text-muted);font-size:12px}
+.extract-preview img{width:100%;border-radius:var(--radius-sm)}
+.extracted-list{display:flex;flex-direction:column;gap:8px}
+.extracted-item{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;font-family:"SF Mono","Fira Code",monospace}
+.extracted-item:hover{border-color:var(--accent)}
+.extracted-item .dot{width:38px;height:38px;border-radius:8px;flex-shrink:0}
+.extracted-item .hex{font-size:14px;font-weight:600;flex:1}
+.extracted-item .pct{font-size:12px;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif}
 /* Gradient */
-.gradient-controls{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:end}
-.gradient-controls label{font-size:13px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px}
-.gradient-controls input[type=color]{width:60px;height:40px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:transparent;cursor:pointer}
-.gradient-controls select{padding:8px 12px;background:var(--bg-card);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:var(--text);font-family:inherit;font-size:13px}
-.preview-gradient{width:100%;height:200px;border-radius:var(--radius);margin-bottom:12px;border:1px solid rgba(255,255,255,.06)}
-.gradient-css{width:100%;padding:12px 16px;background:var(--bg-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;resize:none;outline:none}
-/* Trend palettes */
-.trends-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.trend-card{background:var(--bg-card);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .2s;border:1px solid rgba(255,255,255,.04)}
-.trend-card:hover{transform:translateY(-4px)}
-.trend-card .mini-swatches{display:flex;height:60px}
-.trend-card .mini-swatch{flex:1}
-.trend-card .t-info{padding:12px}
-.trend-card .t-name{font-weight:600;font-size:14px}
-.trend-card .t-desc{color:var(--text-muted);font-size:12px;margin-top:4px}
+.grad-controls{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap;align-items:end}
+.grad-controls label{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.grad-controls input[type=color]{width:56px;height:40px;border:1px solid var(--border);border-radius:6px;cursor:pointer}
+.grad-controls select{padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px}
+.grad-preview{width:100%;height:180px;border-radius:var(--radius-sm);margin-bottom:14px;border:1px solid var(--border)}
+.grad-css{width:100%;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:"SF Mono","Fira Code",monospace;font-size:13px;resize:none;outline:none}
+/* Trends */
+.trends-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.trend-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.trend-card:hover{transform:translateY(-3px);box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.trend-card .mini-row{display:flex;height:50px}
+.trend-card .mini-row div{flex:1}
+.trend-card .t-info{padding:14px}
+.trend-card .t-name{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-weight:600;font-size:14px}
+.trend-card .t-desc{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);margin-top:4px}
 /* Toast */
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;padding:10px 24px;border-radius:20px;font-size:14px;z-index:999;font-weight:600;pointer-events:none;opacity:0;transition:opacity .3s}
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:999;background:var(--text);color:#fff;padding:12px 28px;border-radius:24px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
-footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid rgba(255,255,255,.05);margin-top:32px}
+.ad-banner{max-width:960px;margin:18px auto;padding:14px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius)}
+footer{text-align:center;padding:36px 24px;border-top:1px solid var(--border);margin-top:48px}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
 footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:12px 0}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="../index.html" class="brand">🧰 在线工具站</a>
+  <a href="../index.html" class="brand">← 工具站</a>
   <div class="links">
-    <a href="../image-compressor/">🖼️ 图片压缩</a>
-    <a href="../json-formatter/">{ } JSON工具</a>
-    <a href="../color-palette/" class="here">🎨 配色生成</a>
+    <a href="../image-compressor/">图片压缩</a>
+    <a href="../json-formatter/">JSON 工具</a>
+    <a href="../color-palette/" class="active">配色方案</a>
   </div>
 </nav>
 
-<header>
-  <h1>🎨 配色方案生成器</h1>
-  <p>AI智能配色 · 图片提取主色 · 渐变生成 · 2025趋势色板</p>
-</header>
-
-<div class="ad-banner">📢 广告位 — 百度联盟</div>
-
 <main>
   <div class="tabs">
-    <button class="active" onclick="switchTab('ai')">🤖 AI生成</button>
+    <button class="active" onclick="switchTab('ai')">🤖 AI 生成</button>
     <button onclick="switchTab('extract')">🖼️ 图片取色</button>
-    <button onclick="switchTab('gradient')">🌈 渐变生成</button>
-    <button onclick="switchTab('trends')">🔥 趋势色板</button>
+    <button onclick="switchTab('gradient')">🌈 渐变</button>
+    <button onclick="switchTab('trends')">🔥 趋势</button>
   </div>
 
-  <!-- AI Generate -->
+  <div class="ad-banner">📢 广告位 — 百度联盟</div>
+
+  <!-- AI Palette -->
   <div class="section active" id="sec-ai">
-    <div class="ai-controls">
-      <input type="text" id="aiPrompt" placeholder="描述你想要的配色感觉... 例如：温暖的咖啡店、科技感深色模式、清新自然" value="科技感深色模式">
+    <div class="ai-row">
+      <input type="text" id="aiPrompt" placeholder="描述想要的配色感觉... 如：温暖的咖啡店" value="科技感深色模式">
       <select id="aiStyle">
-        <option value="modern">现代风格</option>
-        <option value="dark">暗色模式</option>
-        <option value="warm">暖色调</option>
-        <option value="cool">冷色调</option>
-        <option value="vibrant">鲜艳活力</option>
-        <option value="muted">柔和莫兰迪</option>
+        <option value="modern">现代风格</option><option value="dark">暗色模式</option>
+        <option value="warm">暖色调</option><option value="cool">冷色调</option>
+        <option value="vibrant">鲜艳活力</option><option value="muted">柔和莫兰迪</option>
         <option value="mono">单色灰度</option>
       </select>
-      <button onclick="generatePalette()">✨ 生成配色</button>
+      <button class="btn-primary" onclick="genPalette()">✨ 生成</button>
     </div>
-    <div class="palette" id="aiPalette"></div>
-    <div style="display:flex;gap:8px">
-      <button onclick="copyPalette()" style="padding:8px 16px;background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);cursor:pointer;font-family:inherit;font-size:13px">📋 复制色值列表</button>
-      <button onclick="exportCSS()" style="padding:8px 16px;background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);cursor:pointer;font-family:inherit;font-size:13px">🎯 导出CSS变量</button>
+    <div class="palette-grid" id="aiPalette"></div>
+    <div class="btn-row">
+      <button onclick="copyPalette()">📋 复制色值</button>
+      <button onclick="exportCSS()">🎯 导出 CSS</button>
     </div>
   </div>
 
@@ -141,32 +143,27 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="section" id="sec-extract">
     <div class="extract-zone" id="extractZone">
       <div class="icon">🖼️</div>
-      <div class="title" style="font-weight:600;margin-bottom:4px">点击上传图片或拖拽到此处</div>
-      <div style="color:var(--text-muted);font-size:13px">自动提取图片中的主要配色</div>
-      <input type="file" id="imageInput" accept="image/*">
+      <div class="title">点击上传或拖拽图片</div>
+      <div class="sub">自动提取主要配色</div>
+      <input type="file" id="imgInput" accept="image/*">
     </div>
     <div class="extract-result" id="extractResult"></div>
   </div>
 
   <!-- Gradient -->
   <div class="section" id="sec-gradient">
-    <div class="gradient-controls">
+    <div class="grad-controls">
       <label>起始色<input type="color" id="gFrom" value="#7c3aed"></label>
       <label>结束色<input type="color" id="gTo" value="#f472b6"></label>
-      <label>方向<select id="gDir" onchange="updateGradient()">
-        <option value="to right">水平 →</option>
-        <option value="to bottom">垂直 ↓</option>
-        <option value="to bottom right">对角 ↘</option>
-        <option value="to top right">对角 ↗</option>
-        <option value="45deg">45°</option>
-        <option value="135deg">135°</option>
-        <option value="225deg">225°</option>
-        <option value="315deg">315°</option>
+      <label>方向<select id="gDir" onchange="upGrad()">
+        <option value="to right">水平 →</option><option value="to bottom">垂直 ↓</option>
+        <option value="to bottom right">对角 ↘</option><option value="to top right">对角 ↗</option>
+        <option value="45deg">45°</option><option value="135deg">135°</option>
       </select></label>
     </div>
-    <div class="preview-gradient" id="previewGradient"></div>
-    <textarea class="gradient-css" id="gradientCSS" rows="2" readonly></textarea>
-    <button onclick="copyGradient()" style="margin-top:8px;padding:8px 16px;background:var(--bg-card);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);cursor:pointer;font-family:inherit;font-size:13px">📋 复制CSS</button>
+    <div class="grad-preview" id="gradPreview"></div>
+    <textarea class="grad-css" id="gradCSS" rows="2" readonly></textarea>
+    <div class="btn-row" style="margin-top:8px"><button onclick="copyGrad()">📋 复制 CSS</button></div>
   </div>
 
   <!-- Trends -->
@@ -175,208 +172,74 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 </main>
 
-<div class="ad-banner">📢 广告位 — 百度联盟</div>
+<div class="ad-banner" style="max-width:960px">📢 广告位 — 百度联盟</div>
 
 <footer>
-  <p>© 2025 配色方案生成器 · 设计工具站 · 纯浏览器端</p>
-  <p style="margin-top:6px"><a href="../privacy.html">🔒 隐私政策</a> · <a href="../image-compressor/">图片压缩</a> · <a href="../json-formatter/">JSON工具</a> · <a href="../index.html">更多工具</a></p>
+  <div class="footer-links">
+    <a href="../privacy.html">隐私政策</a>
+    <a href="../image-compressor/">图片压缩</a>
+    <a href="../json-formatter/">JSON 工具</a>
+    <a href="../index.html">更多工具</a>
+  </div>
+  <p>© 2025 在线工具站</p>
 </footer>
 
 <div class="toast" id="toast"></div>
 
 <script>
 const $=s=>document.querySelector(s);
+const RULES={modern:{h:[0,30,180,210,330],s:[60,40,70,20,80],l:[55,40,95,25,65]},dark:{h:[0,0,30,210,260],s:[10,20,80,60,90],l:[15,25,55,40,60]},warm:{h:[0,15,25,40,350],s:[80,60,40,70,50],l:[50,65,85,35,75]},cool:{h:[200,220,180,240,210],s:[50,70,40,80,30],l:[50,40,85,35,70]},vibrant:{h:[0,50,170,280,140],s:[100,90,80,95,85],l:[50,60,40,55,45]},muted:{h:[20,40,200,340,160],s:[30,25,20,35,15],l:[70,60,85,75,55]},mono:{h:[0,0,0,0,0],s:[5,10,60,30,0],l:[40,60,80,20,95]}};
+const ROLES=['主色','辅色','背景','强调','文字'];
 
-// ====== AI Palette Generator ======
-const PALETTE_RULES = {
-  modern: {hueShift:[0,30,180,210,330], sat:[60,40,70,20,80], light:[55,40,95,25,65]},
-  dark: {hueShift:[0,0,30,210,260], sat:[10,20,80,60,90], light:[15,25,55,40,60]},
-  warm: {hueShift:[0,15,25,40,350], sat:[80,60,40,70,50], light:[50,65,85,35,75]},
-  cool: {hueShift:[200,220,180,240,210], sat:[50,70,40,80,30], light:[50,40,85,35,70]},
-  vibrant: {hueShift:[0,50,170,280,140], sat:[100,90,80,95,85], light:[50,60,40,55,45]},
-  muted: {hueShift:[20,40,200,340,160], sat:[30,25,20,35,15], light:[70,60,85,75,55]},
-  mono: {hueShift:[0,0,0,0,0], sat:[5,10,60,30,0], light:[40,60,80,20,95]},
-};
-
-function generatePalette() {
-  const style = $('#aiStyle').value;
-  const prompt = $('#aiPrompt').value || '科技感深色模式';
-  const rules = PALETTE_RULES[style];
-  const seed = hashCode(prompt);
-
-  const colors = rules.hueShift.map((h, i) => {
-    const hue = (h + (seed % 40) - 20 + 360) % 360;
-    const sat = Math.min(100, Math.max(5, rules.sat[i] + (seed % 20) - 10));
-    const light = Math.min(95, Math.max(5, rules.light[i] + (seed % 16) - 8));
-    return hslToHex(hue, sat, light);
-  });
-
-  const roles = ['主色', '辅色', '背景', '强调色', '文字色'];
-  renderPalette('aiPalette', colors, roles);
+function genPalette(){
+  const s=$('#aiStyle').value,p=$('#aiPrompt').value||'科技感',r=RULES[s],seed=hash(p);
+  const colors=r.h.map((h,i)=>{const hue=(h+(seed%40)-20+360)%360,sat=Math.min(100,Math.max(5,r.s[i]+(seed%20)-10)),light=Math.min(95,Math.max(5,r.l[i]+(seed%16)-8));return hslHex(hue,sat,light)});
+  renderPalette('aiPalette',colors,ROLES);
+}
+function renderPalette(id,colors,roles){
+  $('#'+id).innerHTML=colors.map((c,i)=>{const r=roles?.[i]||'',tc=contrast(c);return`<div class="swatch" onclick="copyColor('${c}')"><div class="color-block" style="background:${c};color:${tc}">${r}</div><div class="info"><div class="hex">${c.toUpperCase()}</div><div class="role">${r}</div></div></div>`}).join('');
 }
 
-function renderPalette(containerId, colors, roles) {
-  const c = document.getElementById(containerId);
-  c.innerHTML = colors.map((hex, i) => {
-    const r = roles?.[i] || '';
-    const textColor = getContrastColor(hex);
-    return `<div class="swatch" onclick="copyColor('${hex}')">
-      <div class="color-block" style="background:${hex};display:flex;align-items:center;justify-content:center;color:${textColor};font-size:13px;font-weight:600">${r}</div>
-      <div class="info"><div class="hex">${hex.toUpperCase()}</div><div class="role">${r}</div></div>
-    </div>`;
-  }).join('');
+// Extract
+const extZone=$('#extractZone'),imgInput=$('#imgInput');
+extZone.addEventListener('click',()=>imgInput.click());
+imgInput.addEventListener('change',()=>{if(imgInput.files[0])extract(imgInput.files[0])});
+extZone.addEventListener('dragover',e=>{e.preventDefault();extZone.style.borderColor='var(--accent)'});
+extZone.addEventListener('dragleave',()=>{extZone.style.borderColor=''});
+extZone.addEventListener('drop',e=>{e.preventDefault();extZone.style.borderColor='';if(e.dataTransfer.files[0])extract(e.dataTransfer.files[0])});
+
+async function extract(file){
+  const img=await createImageBitmap(file);const c=document.createElement('canvas');
+  const s=Math.min(1,200/Math.max(img.width,img.height));c.width=img.width*s;c.height=img.height*s;
+  c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  const d=c.getContext('2d').getImageData(0,0,c.width,c.height).data,map={};
+  for(let i=0;i<d.length;i+=4){const r=Math.round(d[i]/32)*32,g=Math.round(d[i+1]/32)*32,b=Math.round(d[i+2]/32)*32;if(d[i+3]<64)continue;const k=`${r},${g},${b}`;map[k]=(map[k]||0)+1}
+  const sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const total=sorted.reduce((s,[,c])=>s+c,0);
+  const el=$('#extractResult');el.classList.add('show');
+  el.innerHTML=`<div class="extract-preview"><img src="${URL.createObjectURL(img)}"></div><div class="extracted-list">${sorted.map(([rgb,cnt])=>{const[r,g,b]=rgb.split(',');const hex='#'+[r,g,b].map(v=>parseInt(v).toString(16).padStart(2,'0')).join('');return`<div class="extracted-item" onclick="copyColor('${hex}')"><div class="dot" style="background:${hex}"></div><span class="hex">${hex.toUpperCase()}</span><span class="pct">${((cnt/total)*100).toFixed(1)}%</span></div>`}).join('')}</div>`;
 }
 
-// ====== Image Color Extract ======
-const extractZone = $('#extractZone');
-const imageInput = $('#imageInput');
-extractZone.addEventListener('click', () => imageInput.click());
-imageInput.addEventListener('change', () => { if(imageInput.files[0]) extractColors(imageInput.files[0]); });
-extractZone.addEventListener('dragover', e => { e.preventDefault(); extractZone.style.borderColor='var(--accent)'; });
-extractZone.addEventListener('dragleave', () => { extractZone.style.borderColor=''; });
-extractZone.addEventListener('drop', e => {
-  e.preventDefault();
-  extractZone.style.borderColor = '';
-  if(e.dataTransfer.files[0]) extractColors(e.dataTransfer.files[0]);
-});
+// Gradient
+$('#gFrom').addEventListener('input',upGrad);$('#gTo').addEventListener('input',upGrad);
+function upGrad(){const f=$('#gFrom').value,t=$('#gTo').value,d=$('#gDir').value,css=`linear-gradient(${d}, ${f}, ${t})`;$('#gradPreview').style.background=css;$('#gradCSS').value=`background: ${css};`}
 
-async function extractColors(file) {
-  const img = await createImageBitmap(file);
-  const canvas = document.createElement('canvas');
-  const scale = Math.min(1, 200 / Math.max(img.width, img.height));
-  canvas.width = img.width * scale;
-  canvas.height = img.height * scale;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+// Trends
+const TRENDS=[{name:'暗色沉浸',colors:['#0f172a','#1e293b','#f59e0b','#334155','#f8fafc'],desc:'2025 暗色设计主流'},{name:'毛玻璃霓虹',colors:['#0c0c1d','#1a1a3e','#7c3aed','#06b6d4','#fafafa'],desc:'glassmorphism 2.0'},{name:'新粗野主义',colors:['#fff','#000','#ff6b6b','#ffd93d','#6c5ce7'],desc:'Neo-Brutalist'},{name:'复古未来',colors:['#1a1a2e','#16213e','#e94560','#0f3460','#f5f5f5'],desc:'80s 霓虹赛博'},{name:'有机自然',colors:['#1b4332','#40916c','#52b788','#d8f3dc','#f0fdf4'],desc:'可持续绿色系'},{name:'日本极简',colors:['#fafaf9','#e7e5e4','#d6d3d1','#78716c','#292524'],desc:'Wabi-sabi 禅意'},{name:'海洋深邃',colors:['#0c4a6e','#0369a1','#0284c7','#38bdf8','#e0f2fe'],desc:'蓝调渐变层次'},{name:'日落暖橙',colors:['#431407','#9a3412','#ea580c','#fb923c','#fed7aa'],desc:'温暖橙色系'}];
+function renderTrends(){$('#trendsGrid').innerHTML=TRENDS.map(t=>`<div class="trend-card" onclick="applyTrend('${t.name}')"><div class="mini-row">${t.colors.map(c=>`<div style="background:${c}"></div>`).join('')}</div><div class="t-info"><div class="t-name">${t.name}</div><div class="t-desc">${t.desc}</div></div></div>`).join('')}
+function applyTrend(n){const t=TRENDS.find(x=>x.name===n);if(!t)return;renderPalette('aiPalette',t.colors,ROLES);switchTab('ai')}
 
-  // Color quantization - simple bucketing
-  const colorMap = {};
-  for (let i = 0; i < data.length; i += 4) {
-    const r = Math.round(data[i] / 32) * 32;
-    const g = Math.round(data[i+1] / 32) * 32;
-    const b = Math.round(data[i+2] / 32) * 32;
-    if (data[i+3] < 64) continue; // Skip transparent
-    const key = `${r},${g},${b}`;
-    colorMap[key] = (colorMap[key] || 0) + 1;
-  }
-
-  const sorted = Object.entries(colorMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
-  const total = sorted.reduce((s,[,c]) => s + c, 0);
-
-  const resultEl = $('#extractResult');
-  resultEl.classList.add('show');
-  resultEl.innerHTML = `
-    <div class="extract-preview">
-      <img src="${URL.createObjectURL(img)}" alt="预览">
-    </div>
-    <div class="extracted-colors">
-      ${sorted.map(([rgb, count]) => {
-        const [r,g,b] = rgb.split(',');
-        const hex = '#' + [r,g,b].map(v=>parseInt(v).toString(16).padStart(2,'0')).join('');
-        const pct = ((count/total)*100).toFixed(1);
-        return `<div class="extracted-color" onclick="copyColor('${hex}')" style="cursor:pointer">
-          <div class="dot" style="background:${hex}"></div>
-          <span class="hex">${hex.toUpperCase()}</span>
-          <span class="pct">${pct}%</span>
-        </div>`;
-      }).join('')}
-    </div>
-  `;
-}
-
-// ====== Gradient ======
-$('#gFrom').addEventListener('input', updateGradient);
-$('#gTo').addEventListener('input', updateGradient);
-
-function updateGradient() {
-  const from = $('#gFrom').value, to = $('#gTo').value, dir = $('#gDir').value;
-  const css = `background: linear-gradient(${dir}, ${from}, ${to});`;
-  $('#previewGradient').style.cssText = css;
-  $('#gradientCSS').value = css;
-}
-
-// ====== Trends ======
-const TRENDS = [
-  {name:'暗色沉浸 + 暖色点缀',colors:['#0f172a','#1e293b','#f59e0b','#334155','#f8fafc'],desc:'2025 主流暗色设计'},
-  {name:'毛玻璃 + 霓虹光',colors:['#0c0c1d','#1a1a3e','#7c3aed','#06b6d4','#fafafa'],desc:'glassmorphism 2.0'},
-  {name:'新粗野主义',colors:['#fff','#000','#ff6b6b','#ffd93d','#6c5ce7'],desc:'Neo-Brutalist 标志色板'},
-  {name:'复古未来主义',colors:['#1a1a2e','#16213e','#e94560','#0f3460','#f5f5f5'],desc:'80年代霓虹+赛博'},
-  {name:'有机自然',colors:['#1b4332','#40916c','#52b788','#d8f3dc','#f0fdf4'],desc:'可持续设计绿色系'},
-  {name:'日本极简',colors:['#fafaf9','#e7e5e4','#d6d3d1','#78716c','#292524'],desc:'Wabi-sabi 禅意配色'},
-  {name:'海洋深邃',colors:['#0c4a6e','#0369a1','#0284c7','#38bdf8','#e0f2fe'],desc:'蓝调渐变层次'},
-  {name:'日落暖橙',colors:['#431407','#9a3412','#ea580c','#fb923c','#fed7aa'],desc:'温暖热烈的橙色系'},
-];
-
-function renderTrends() {
-  $('#trendsGrid').innerHTML = TRENDS.map(t => `
-    <div class="trend-card" onclick="applyTrend('${t.name}')">
-      <div class="mini-swatches">${t.colors.map(c => `<div class="mini-swatch" style="background:${c}" title="${c}"></div>`).join('')}</div>
-      <div class="t-info"><div class="t-name">${t.name}</div><div class="t-desc">${t.desc}</div></div>
-    </div>
-  `).join('');
-}
-
-function applyTrend(name) {
-  const trend = TRENDS.find(t => t.name === name);
-  if (!trend) return;
-  const roles = ['主色','辅色','背景','强调','文字'];
-  renderPalette('aiPalette', trend.colors, roles);
-  switchTab('ai');
-}
-
-// ====== Utilities ======
-function hslToHex(h, s, l) {
-  s /= 100; l /= 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = n => { const k = (n + h / 30) % 12; return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1); };
-  return '#' + [f(0), f(8), f(4)].map(v => Math.round(v * 255).toString(16).padStart(2, '0')).join('');
-}
-
-function hashCode(s) { let h = 0; for (let i = 0; i < s.length; i++) h = ((h << 5) - h) + s.charCodeAt(i); return Math.abs(h); }
-
-function getContrastColor(hex) {
-  const r = parseInt(hex.slice(1,3), 16), g = parseInt(hex.slice(3,5), 16), b = parseInt(hex.slice(5,7), 16);
-  return (0.299*r + 0.587*g + 0.114*b) > 150 ? '#000' : '#fff';
-}
-
-function copyColor(hex) {
-  navigator.clipboard.writeText(hex.toUpperCase()).then(() => showToast(`✅ 已复制 ${hex.toUpperCase()}`));
-}
-
-function copyPalette() {
-  const hexes = [...document.querySelectorAll('#aiPalette .hex')].map(e => e.textContent).join('\n');
-  navigator.clipboard.writeText(hexes).then(() => showToast('✅ 色值列表已复制'));
-}
-
-function exportCSS() {
-  const hexes = [...document.querySelectorAll('#aiPalette .hex')].map(e => e.textContent);
-  const vars = hexes.map((h, i) => `  --color-${i+1}: ${h};`).join('\n');
-  navigator.clipboard.writeText(`:root {\n${vars}\n}`).then(() => showToast('✅ CSS变量已复制'));
-}
-
-function copyGradient() {
-  navigator.clipboard.writeText($('#gradientCSS').value).then(() => showToast('✅ CSS已复制'));
-}
-
-function switchTab(tab) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-  $(`#sec-${tab}`).classList.add('active');
-  event.target.classList.add('active');
-}
-
-function showToast(msg) {
-  const t = $('#toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-// Init
-generatePalette();
-updateGradient();
-renderTrends();
+// Utils
+function hslHex(h,s,l){s/=100;l/=100;const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12;return l-a*Math.max(Math.min(k-3,9-k,1),-1)};return'#'+[f(0),f(8),f(4)].map(v=>Math.round(v*255).toString(16).padStart(2,'0')).join('')}
+function hash(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i);return Math.abs(h)}
+function contrast(hex){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return(.299*r+.587*g+.114*b)>150?'#000':'#fff'}
+function copyColor(h){navigator.clipboard.writeText(h.toUpperCase()).then(()=>toast('已复制 '+h.toUpperCase()))}
+function copyPalette(){const h=[...document.querySelectorAll('#aiPalette .hex')].map(e=>e.textContent).join('\n');navigator.clipboard.writeText(h).then(()=>toast('色值已复制'))}
+function exportCSS(){const h=[...document.querySelectorAll('#aiPalette .hex')].map(e=>e.textContent);navigator.clipboard.writeText(`:root {\n${h.map((x,i)=>`  --color-${i+1}: ${x};`).join('\n')}\n}`).then(()=>toast('CSS 已复制'))}
+function copyGrad(){navigator.clipboard.writeText($('#gradCSS').value).then(()=>toast('CSS 已复制'))}
+function switchTab(t){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));$('#sec-'+t).classList.add('active');event.target.classList.add('active')}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+genPalette();upGrad();renderTrends();
 </script>
 </body>
 </html>
