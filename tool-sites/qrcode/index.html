@@ -155,7 +155,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="tool-panel">
     <div class="qr-result" id="qrResult">
-      <canvas id="qrCanvas"></canvas>
+      <img id="qrImage" style="max-width:100%" alt="二维码">
     </div>
   </div>
 
@@ -176,207 +176,34 @@ footer a:hover{text-decoration:underline}
 
 <script>
 const $=s=>document.querySelector(s);
-const canvas=$('#qrCanvas'),ctx=canvas.getContext('2d');
 let history=JSON.parse(localStorage.getItem('qr_history')||'[]');
 let debounceTimer;
-
-// Minimal QR Code Generator - Alphanumeric/Byte mode, Level M
-// Based on QR Code specification ISO/IEC 18004
-const QR=(function(){
-  // Generate QR code matrix for given text
-  function generate(text,ecLevel){
-    // Use a simple approach: encode via table-based QR generation
-    const data=encodeData(text);
-    const version=getVersion(data.length,ecLevel||'M');
-    const size=17+version*4;
-    const matrix=createMatrix(size);
-
-    // Finder patterns
-    placeFinder(matrix,0,0);
-    placeFinder(matrix,0,size-7);
-    placeFinder(matrix,size-7,0);
-
-    // Timing patterns
-    for(let i=8;i<size-8;i++){matrix[6][i]=(i%2===0)?1:0;matrix[i][6]=(i%2===0)?1:0;}
-
-    // Place data bits (simplified)
-    placeData(matrix,data,version);
-
-    // Apply mask
-    applyMask(matrix,getBestMask(matrix));
-
-    // Format info
-    placeFormatInfo(matrix,ecLevel,0);
-
-    return matrix;
-  }
-
-  function encodeData(text){
-    const bytes=[];
-    for(let i=0;i<text.length;i++){
-      const c=text.charCodeAt(i);
-      if(c<128)bytes.push(c);
-      else if(c<2048){bytes.push(192|c>>6);bytes.push(128|c&63);}
-      else{bytes.push(224|c>>12);bytes.push(128|(c>>6)&63);bytes.push(128|c&63);}
-    }
-    // Add mode indicator (0100 = byte) and terminator
-    const bits=[0,1,0,0]; // byte mode
-    const len=bytes.length;
-    for(let i=7;i>=0;i--)bits.push((len>>i)&1);
-    for(const b of bytes)for(let i=7;i>=0;i--)bits.push((b>>i)&1);
-    bits.push(0,0,0,0); // terminator
-    return bits;
-  }
-
-  function getVersion(dataLen,ec){
-    // Simplified: use version 2 (25x25) for most cases
-    return 2;
-  }
-
-  function createMatrix(size){
-    return Array.from({length:size},()=>new Array(size).fill(null));
-  }
-
-  function placeFinder(m,row,col){
-    for(let r=-1;r<=7;r++)for(let c=-1;c<=7;c++){
-      if(row+r<0||col+c<0||row+r>=m.length||col+c>=m[0].length)continue;
-      if(r<0||r>6||c<0||c>6)m[row+r][col+c]=0;
-      else if((r===0||r===6||c===0||c===6)||(r>=2&&r<=4&&c>=2&&c<=4))m[row+r][col+c]=1;
-      else m[row+r][col+c]=0;
-    }
-  }
-
-  function placeData(matrix,data,version){
-    const size=matrix.length;
-    let idx=0,up=true;
-    for(let c=size-1;c>=0;c-=2){
-      if(c===6)c=5; // Skip timing column
-      for(let r=(up?size-1:0);up?r>=0:r<size;up?r--:r++){
-        for(let dc=0;dc<2;dc++){
-          const col=c-dc;
-          if(col<0||matrix[r][col]!==null)continue;
-          if(idx<data.length){matrix[r][col]=data[idx];idx++;}
-          else matrix[r][col]=0;
-        }
-      }
-      up=!up;
-    }
-  }
-
-  function getBestMask(matrix){
-    const size=matrix.length;
-    let bestMask=0,bestScore=Infinity;
-    for(let mask=0;mask<8;mask++){
-      const test=matrix.map(r=>[...r]);
-      applyMaskData(test,mask,size);
-      const score=evaluateMask(test,size);
-      if(score<bestScore){bestScore=score;bestMask=mask;}
-    }
-    return bestMask;
-  }
-
-  function applyMaskData(matrix,mask,size){
-    for(let r=0;r<size;r++)for(let c=0;c<size;c++){
-      if(matrix[r][c]===null||matrix[r][c]===2)continue;
-      let invert=false;
-      switch(mask){
-        case 0:invert=(r+c)%2===0;break;
-        case 1:invert=r%2===0;break;
-        case 2:invert=c%3===0;break;
-        case 3:invert=(r+c)%3===0;break;
-        case 4:invert=(Math.floor(r/2)+Math.floor(c/3))%2===0;break;
-        case 5:invert=((r*c)%2)+((r*c)%3)===0;break;
-        case 6:invert=(((r*c)%2)+((r*c)%3))%2===0;break;
-        case 7:invert=(((r+c)%2)+((r*c)%3))%2===0;break;
-      }
-      if(invert)matrix[r][c]=1-matrix[r][c];
-    }
-  }
-
-  function applyMask(matrix,mask){
-    const size=matrix.length;
-    for(let r=0;r<size;r++)for(let c=0;c<size;c++){
-      if(matrix[r][c]===null||matrix[r][c]===2)continue;
-      let invert=false;
-      switch(mask){
-        case 0:invert=(r+c)%2===0;break;
-        case 1:invert=r%2===0;break;
-        case 2:invert=c%3===0;break;
-        case 3:invert=(r+c)%3===0;break;
-        case 4:invert=(Math.floor(r/2)+Math.floor(c/3))%2===0;break;
-        case 5:invert=((r*c)%2)+((r*c)%3)===0;break;
-        case 6:invert=(((r*c)%2)+((r*c)%3))%2===0;break;
-        case 7:invert=(((r+c)%2)+((r*c)%3))%2===0;break;
-      }
-      if(invert)matrix[r][c]=1-matrix[r][c];
-    }
-  }
-
-  function evaluateMask(matrix,size){
-    // Simplified evaluation
-    let penalty=0;
-    // Adjacent modules in row
-    for(let r=0;r<size;r++){let run=0;for(let c=0;c<size;c++){if(matrix[r][c])run++;else{if(run>=5)penalty+=3+run-5;run=0;}}if(run>=5)penalty+=3+run-5;}
-    // 2x2 blocks
-    for(let r=0;r<size-1;r++)for(let c=0;c<size-1;c++)if(matrix[r][c]===matrix[r][c+1]&&matrix[r][c]===matrix[r+1][c]&&matrix[r][c]===matrix[r+1][c+1])penalty+=3;
-    return penalty;
-  }
-
-  function placeFormatInfo(matrix,ec,mask){
-    // Simplified: skip format info for now
-  }
-
-  return {generate};
-})();
+const qrImage=$('#qrImage');
 
 function generateQR(){
   const text=$('#textInput').value.trim();
-  if(!text){toast('请输入文本或网址');return}
+  if(!text){$('#qrResult').innerHTML='<p style="color:var(--muted);text-align:center;padding:40px">请输入文本或网址</p>';return}
 
   const size=parseInt($('#sizeSelect').value);
-  const fg=$('#fgColor').value;
-  const bg=$('#bgColor').value;
+  const fg=$('#fgColor').value.replace('#','');
+  const bg=$('#bgColor').value.replace('#','');
 
-  try{
-    const matrix=QR.generate(text,'M');
-    const n=matrix.length;
-    const scale=Math.floor(size/n);
-    const margin=Math.floor((size-n*scale)/2);
-
-    canvas.width=size;canvas.height=size;
-    ctx.fillStyle=bg;ctx.fillRect(0,0,size,size);
-    ctx.fillStyle=fg;
-
-    for(let r=0;r<n;r++){
-      for(let c=0;c<n;c++){
-        if(matrix[r][c]){
-          ctx.fillRect(margin+c*scale,margin+r*scale,scale,scale);
-        }
-      }
-    }
-
-    // Add to history
-    addHistory(text);
-    toast('二维码已生成');
-  }catch(e){
-    // Fallback: use Google Charts API as image
-    const img=new Image();
-    img.onload=()=>{
-      canvas.width=size;canvas.height=size;
-      ctx.fillStyle=bg;ctx.fillRect(0,0,size,size);
-      ctx.drawImage(img,0,0,size,size);
-      addHistory(text);
-      toast('二维码已生成');
-    };
-    img.onerror=()=>toast('生成失败，请检查输入内容');
-    img.src=`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${fg.replace('#','')}&bgcolor=${bg.replace('#','')}`;
-  }
+  // Use goQR.me API - reliable and fast
+  const url=`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${fg}&bgcolor=${bg}&margin=10`;
+  qrImage.src=url;
+  qrImage.onload=()=>{addHistory(text);toast('二维码已生成')};
+  qrImage.onerror=()=>toast('生成失败，请检查网络连接');
 }
 
 function downloadQR(){
-  const data=canvas.toDataURL('image/png');
+  const img=qrImage;
+  if(!img.complete||!img.naturalWidth){toast('请先生成二维码');return}
+  const canvas=document.createElement('canvas');
+  canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(img,0,0);
   const a=document.createElement('a');
-  a.href=data;a.download='qrcode.png';a.click();
+  a.href=canvas.toDataURL('image/png');a.download='qrcode.png';a.click();
   toast('已下载');
 }
 
