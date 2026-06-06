@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4785044437048157">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>时间戳转换器 · 在线工具站</title>
+<meta name="description" content="Unix时间戳与日期互转，支持秒/毫秒，实时显示当前时间戳。">
+<style>:root{--bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;--accent:#3a6e8a;--accent-hover:#2c5a6e;--accent-bg:#eef4f8;--accent-light:#dde8f2}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:Georgia,"Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");min-height:100vh;display:flex;flex-direction:column}
+nav{position:sticky;top:0;z-index:100;background:rgba(249,248,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+nav .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav .links a{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:11px;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px;transition:.15s}
+nav .links a:hover{color:var(--text);background:var(--accent-light)}
+nav .links a.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+main{flex:1;max-width:860px;margin:0 auto;padding:40px 24px;width:100%}
+h1{font-size:30px;letter-spacing:-.02em;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.ad-banner{max-width:860px;margin:20px auto;padding:12px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:12px}
+.tool-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px}
+.tool-panel label{font-size:12px;font-weight:600;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px}
+input,textarea{width:100%;padding:10px 14px;font-family:"SF Mono","Fira Code",monospace;font-size:14px;line-height:1.6;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);outline:none;transition:.15s}
+input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.row>*{flex:1;min-width:160px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+button{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;padding:10px 20px;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;font-weight:500;background:var(--surface);color:var(--text)}
+button:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.live-clock{text-align:center;padding:20px;font-size:48px;font-family:"SF Mono","Fira Code",monospace;color:var(--accent);font-weight:700}
+.live-label{text-align:center;font-size:13px;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;margin-bottom:4px}
+.result{background:var(--accent-bg);padding:16px;border-radius:10px;font-family:"SF Mono","Fira Code",monospace;font-size:15px;margin-top:8px;word-break:break-all;min-height:40px}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;margin-top:30px}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:16px 18px;font-size:13px;line-height:1.9;color:var(--text)}
+.guide-content strong{color:var(--accent)}
+.guide-content p{margin:6px 0}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+<!-- 百度统计 --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+<!-- Google AdSense --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4785044437048157" crossorigin="anonymous"></script>
+</head><body>
+<nav><a href="../index.html" class="brand">← 工具站</a><div class="links"><a href="../image-compressor/">图片压缩</a><a href="../svg-to-png/">SVG→PNG</a><a href="../image-to-webp/">转WebP</a><a href="../image-resize/">缩放</a><a href="../color-palette/">配色</a><a href="../json-formatter/">JSON</a><a href="../base64/">Base64</a><a href="../markdown-editor/">Markdown</a><a href="../qrcode/">二维码</a><a href="../regex-tester/">正则</a><a href="../uuid-generator/">UUID</a><a href="../timestamp/" class="active">时间戳</a><a href="../text-tools/">文本</a></div></nav>
+<main><h1>⏱ 时间戳转换器</h1><p class="subtitle">Unix 时间戳 ↔ 日期时间互转，支持秒/毫秒</p>
+<div class="ad-banner">📢 广告位 — Google AdSense</div>
+<details class="guide"><summary>使用说明 · 点击展开</summary><div class="guide-content"><p><strong>🎯 时间戳是什么？</strong><br>计算机用一串数字表示时间。比如 1717718400 = 2024年6月7日。开发接口、查日志经常遇到。</p><p><strong>📖 怎么用？</strong><br>输入时间戳→点"转为日期"看结果；或者选日期→点"转为时间戳"。当前时间戳实时显示在上面。</p><p><strong>💡 什么时候用？</strong><br>看API返回的时间、查数据库记录、调接口传时间参数。</p></div></details>
+<div class="tool-panel"><div class="live-label">当前时间戳</div><div class="live-clock" id="clock">...</div></div>
+<div class="tool-panel"><label>时间戳 → 日期</label><div class="row"><input type="number" id="tsInput" placeholder="输入时间戳...如 1717718400"><select id="tsUnit"><option value="s">秒</option><option value="ms">毫秒</option></select></div><div class="btn-row"><button class="btn-primary" onclick="tsToDate()">转为日期</button><button onclick="$('#tsInput').value=Math.floor(Date.now()/1000);tsToDate()">填入当前</button></div><div class="result" id="tsResult"></div></div>
+<div class="tool-panel"><label>日期 → 时间戳</label><div class="row"><input type="datetime-local" id="dtInput"><button class="btn-primary" onclick="dateToTs()">转为时间戳</button></div><div class="result" id="dtResult"></div></div>
+<div class="ad-banner">📢 广告位 — Google AdSense</div></main>
+<footer><p>&copy; 2026 在线工具站 · 纯浏览器端处理</p></footer>
+<div class="toast" id="toast"></div>
+<script>const $=s=>document.querySelector(s);
+function updateClock(){const now=Date.now();$('#clock').innerHTML=`<div>${Math.floor(now/1000)}</div><div style="font-size:14px;color:var(--muted);margin-top:4px">秒</div>`;setTimeout(updateClock,1000)}
+updateClock();
+$('#dtInput').value=new Date().toISOString().slice(0,16);
+function tsToDate(){const v=$('#tsInput').value.trim();if(!v)return;const ms=$('#tsUnit').value==='s'?Number(v)*1000:Number(v);const d=new Date(ms);if(isNaN(d.getTime())){$('#tsResult').textContent='无效时间戳';return}$('#tsResult').innerHTML=`<div style="font-size:18px;margin-bottom:4px">${d.toLocaleString('zh-CN')}</div><div>ISO: ${d.toISOString()}</div><div>UTC: ${d.toUTCString()}</div><div>星期${['日','一','二','三','四','五','六'][d.getDay()]}</div>`}
+function dateToTs(){const v=$('#dtInput').value;if(!v){toast('请选择日期');return}const d=new Date(v),s=Math.floor(d.getTime()/1000);$('#dtResult').innerHTML=`<div style="font-size:18px;margin-bottom:4px">${s}</div><div style="color:var(--muted)">秒（Unix时间戳）</div><div style="margin-top:6px">${d.getTime()}</div><div style="color:var(--muted)">毫秒</div>`}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}</script>
+</body></html>

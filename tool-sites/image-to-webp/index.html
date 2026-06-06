@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4785044437048157">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>图片转 WebP · 在线工具站</title>
+<meta name="description" content="免费在线PNG/JPG转WebP工具，拖拽上传，可调质量，纯浏览器端转换，文件不上传。">
+<style>:root{--bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;--accent:#3a8a6e;--accent-hover:#2a6a50;--accent-bg:#f0f8f4;--accent-light:#e0f2e8}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:Georgia,"Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");min-height:100vh;display:flex;flex-direction:column}
+nav{position:sticky;top:0;z-index:100;background:rgba(249,248,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+nav .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav .links a{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:11px;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px;transition:.15s}
+nav .links a:hover{color:var(--text);background:var(--accent-light)}
+nav .links a.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+main{flex:1;max-width:900px;margin:0 auto;padding:40px 24px;width:100%}
+h1{font-size:30px;letter-spacing:-.02em;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.ad-banner{max-width:900px;margin:20px auto;padding:12px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:12px}
+.tool-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px}
+.tool-panel label{font-size:12px;font-weight:600;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.row>*{flex:1;min-width:120px}
+button{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;padding:10px 20px;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;font-weight:500;background:var(--surface);color:var(--text)}
+button:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.file-zone{border:2px dashed var(--border);border-radius:12px;padding:36px;text-align:center;cursor:pointer;transition:.15s;font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--muted)}
+.file-zone:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.file-zone input{display:none}
+input[type=range]{width:100%}
+.preview{text-align:center;padding:16px;background:var(--bg);border-radius:10px;margin-top:12px}
+.preview img{max-width:100%;max-height:300px;border-radius:8px}
+.compare{display:flex;gap:20px;flex-wrap:wrap}
+.compare>div{flex:1;min-width:250px;text-align:center}
+.compare img{max-width:100%;max-height:250px;border-radius:8px}
+.stats{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);margin-top:8px;text-align:center}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;margin-top:30px}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted)}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);list-style:none;user-select:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:16px 18px;font-size:13px;line-height:1.9}
+.guide-content strong{color:var(--accent)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+<script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4785044437048157" crossorigin="anonymous"></script>
+</head><body>
+<nav><a href="../index.html" class="brand">← 工具站</a><div class="links"><a href="../image-compressor/">图片压缩</a><a href="../svg-to-png/">SVG→PNG</a><a href="../image-to-webp/" class="active">转WebP</a><a href="../image-resize/">缩放</a><a href="../color-palette/">配色</a><a href="../json-formatter/">JSON</a><a href="../base64/">Base64</a><a href="../markdown-editor/">Markdown</a><a href="../qrcode/">二维码</a><a href="../regex-tester/">正则</a><a href="../uuid-generator/">UUID</a><a href="../timestamp/">时间戳</a><a href="../text-tools/">文本</a></div></nav>
+<main><h1>🖼 图片转 WebP</h1><p class="subtitle">PNG/JPG 转 WebP 格式，体积更小，画质几乎无损</p>
+<div class="ad-banner">📢 广告位 — Google AdSense</div>
+<details class="guide"><summary>使用说明 · 点击展开</summary><div class="guide-content"><p><strong>🎯 WebP 是什么？</strong><br>Google 推出的新一代图片格式，同样画质下比 PNG 小 30%-50%，比 JPG 小 25%-35%。网站用了加载更快，省流量。</p><p><strong>📖 怎么用？</strong><br>上传一张 PNG 或 JPG 图片→调质量滑块→预览→下载 WebP 文件。<strong>纯浏览器转换，图片不上传。</strong></p></div></details>
+<div class="tool-panel"><label>上传图片</label><div class="file-zone" id="dropZone"><input type="file" id="fileInput" accept="image/*" onchange="handleFile(this)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/></svg>拖拽或点击上传图片</div><div style="margin-top:14px"><label>质量：<span id="qualityVal">80</span>%</label><input type="range" id="quality" value="80" min="1" max="100" oninput="$('#qualityVal').textContent=this.value;convert()"></div></div>
+<div class="tool-panel"><div class="compare" id="compare" style="display:none"><div><label>原图</label><img id="originalImg"><div class="stats" id="origSize"></div></div><div><label>WebP</label><img id="webpImg"><div class="stats" id="webpSize"></div></div></div><div class="preview" id="placeholder"><p style="color:var(--muted)">上传图片开始转换</p></div><div class="btn-row"><button class="btn-primary" id="downloadBtn" style="display:none" onclick="downloadWebP()">下载 WebP</button></div></div>
+<div class="ad-banner">📢 广告位 — Google AdSense</div></main>
+<footer><p>&copy; 2026 在线工具站 · 纯浏览器端处理</p></footer>
+<div class="toast" id="toast"></div>
+<script>const $=s=>document.querySelector(s);let currentBlob=null,originalFile=null;
+function handleFile(inp){const f=inp.files[0];if(!f)return;$('#placeholder').style.display='none';$('#compare').style.display='flex';originalFile=f;const reader=new FileReader();reader.onload=()=>{$('#originalImg').src=reader.result;$('#origSize').textContent=`原始：${(f.size/1024).toFixed(1)} KB (${f.type||'未知'})`;convert()};reader.readAsDataURL(f)}
+function convert(){if(!originalFile)return;const q=parseInt($('#quality').value)/100;const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');canvas.width=img.width;canvas.height=img.height;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);canvas.toBlob(blob=>{currentBlob=blob;$('#webpImg').src=URL.createObjectURL(blob);const saving=100-Math.round(blob.size/originalFile.size*100);$('#webpSize').innerHTML=`WebP：${(blob.size/1024).toFixed(1)} KB<br><span style="color:#2d8a6e">节省 ${saving>0?saving:0}%</span>`;$('#downloadBtn').style.display='inline-flex'},'image/webp',q)};img.src=$('#originalImg').src}
+function downloadWebP(){if(!currentBlob){toast('请先上传转换');return}const a=document.createElement('a');a.href=URL.createObjectURL(currentBlob);a.download='converted.webp';a.click();toast('已下载')}
+['dragover','drop'].forEach(ev=>{$('#dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop'){$('#fileInput').files=e.dataTransfer.files;handleFile($('#fileInput'))}$('#dropZone').style.borderColor=ev==='dragover'?'var(--accent)':''})})
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}</script>
+</body></html>

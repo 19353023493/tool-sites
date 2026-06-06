@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4785044437048157">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>文本工具箱 · 在线工具站</title>
+<meta name="description" content="文本去重、排序、大小写转换、URL编解码，纯浏览器端处理。">
+<style>:root{--bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;--accent:#8a5c3a;--accent-hover:#6a4428;--accent-bg:#faf6f2;--accent-light:#f2e8de}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:Georgia,"Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");min-height:100vh;display:flex;flex-direction:column}
+nav{position:sticky;top:0;z-index:100;background:rgba(249,248,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+nav .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav .links a{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:11px;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px;transition:.15s}
+nav .links a:hover{color:var(--text);background:var(--accent-light)}
+nav .links a.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+main{flex:1;max-width:960px;margin:0 auto;padding:40px 24px;width:100%}
+h1{font-size:30px;letter-spacing:-.02em;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.ad-banner{max-width:960px;margin:20px auto;padding:12px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:12px}
+.tool-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px}
+.tool-panel label{font-size:12px;font-weight:600;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px}
+textarea{width:100%;min-height:120px;padding:12px 14px;font-family:"SF Mono","Fira Code",monospace;font-size:13px;line-height:1.7;border:1px solid var(--border);border-radius:10px;resize:vertical;background:var(--bg);color:var(--text);outline:none;transition:.15s}
+textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px;font-weight:500;background:var(--surface);color:var(--text)}
+button:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.stats{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);margin-top:8px}
+.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.tabs button{padding:8px 16px;font-size:13px;border-radius:20px}
+.tabs button.active-tab{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.show{display:block}
+input{width:100%;padding:10px 14px;font-family:"SF Mono","Fira Code",monospace;font-size:14px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);outline:none}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;margin-top:30px}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted)}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:16px 18px;font-size:13px;line-height:1.9}
+.guide-content strong{color:var(--accent)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+<script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4785044437048157" crossorigin="anonymous"></script>
+</head><body>
+<nav><a href="../index.html" class="brand">← 工具站</a><div class="links"><a href="../image-compressor/">图片压缩</a><a href="../svg-to-png/">SVG→PNG</a><a href="../image-to-webp/">转WebP</a><a href="../image-resize/">缩放</a><a href="../color-palette/">配色</a><a href="../json-formatter/">JSON</a><a href="../base64/">Base64</a><a href="../markdown-editor/">Markdown</a><a href="../qrcode/">二维码</a><a href="../regex-tester/">正则</a><a href="../uuid-generator/">UUID</a><a href="../timestamp/">时间戳</a><a href="../text-tools/" class="active">文本</a></div></nav>
+<main><h1>📝 文本工具箱</h1><p class="subtitle">文本去重排序 / 大小写转换 / URL 编解码</p>
+<div class="ad-banner">📢 广告位 — Google AdSense</div>
+<details class="guide"><summary>使用说明 · 点击展开</summary><div class="guide-content"><p><strong>🔤 文本去重排序</strong> — 粘贴多行文本，去重复行、按字母/数字排序<br><strong>🔠 大小写转换</strong> — 一键转大写/小写/首字母大写<br><strong>🔗 URL编解码</strong> — 把中文网址变成百分号格式，或反过来解码</p></div></details>
+<div class="tabs"><button class="active-tab" onclick="switchTab('dedup')">去重排序</button><button onclick="switchTab('case')">大小写</button><button onclick="switchTab('url')">URL编解码</button></div>
+<div class="tab-content show" id="dedup"><textarea id="dedupInput" placeholder="每行一个内容，粘贴到这里..."></textarea><div class="btn-row"><button class="btn-primary" onclick="processDedup('unique')">去重复行</button><button onclick="processDedup('sort')">按字母排序</button><button onclick="processDedup('reverse')">反转顺序</button><button onclick="processDedup('trim')">去除空行</button></div><textarea id="dedupOutput" placeholder="结果..." readonly></textarea><div class="stats" id="dedupStats"></div></div>
+<div class="tab-content" id="case"><textarea id="caseInput" placeholder="输入文本..."></textarea><div class="btn-row"><button class="btn-primary" onclick="processCase('upper')">全部大写</button><button onclick="processCase('lower')">全部小写</button><button onclick="processCase('capitalize')">首字母大写</button><button onclick="processCase('title')">每个词首字母大写</button></div><textarea id="caseOutput" placeholder="结果..." readonly></textarea></div>
+<div class="tab-content" id="url"><textarea id="urlInput" placeholder="输入文本或URL编码字符串..."></textarea><div class="btn-row"><button class="btn-primary" onclick="processURL('encode')">URL 编码</button><button onclick="processURL('decode')">URL 解码</button></div><textarea id="urlOutput" placeholder="结果..." readonly></textarea></div>
+<div class="ad-banner">📢 广告位 — Google AdSense</div></main>
+<footer><p>&copy; 2026 在线工具站 · 纯浏览器端处理</p></footer>
+<div class="toast" id="toast"></div>
+<script>const $=s=>document.querySelector(s);
+function switchTab(tab){document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active-tab'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('show'));$('#'+tab).classList.add('show');event.target.classList.add('active-tab')}
+function processDedup(mode){const lines=$('#dedupInput').value.split('\n');let result;switch(mode){case'unique':result=[...new Set(lines)];break;case'sort':result=[...lines].sort();break;case'reverse':result=[...lines].reverse();break;case'trim':result=lines.filter(l=>l.trim());break}$('#dedupOutput').value=result.join('\n');$('#dedupStats').textContent=`输入 ${lines.length} 行 → 输出 ${result.length} 行`}
+function processCase(mode){const text=$('#caseInput').value;let result;switch(mode){case'upper':result=text.toUpperCase();break;case'lower':result=text.toLowerCase();break;case'capitalize':result=text.charAt(0).toUpperCase()+text.slice(1).toLowerCase();break;case'title':result=text.replace(/\w\S*/g,w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase());break}$('#caseOutput').value=result}
+function processURL(mode){const text=$('#urlInput').value;try{$('#urlOutput').value=mode==='encode'?encodeURIComponent(text):decodeURIComponent(text)}catch(e){toast('解码失败：' + e.message)}}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}</script>
+</body></html>

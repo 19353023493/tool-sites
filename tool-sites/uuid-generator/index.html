@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4785044437048157">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UUID 生成器 · 在线工具站</title>
+<meta name="description" content="在线UUID/GUID生成器，支持V1/V4格式，批量生成，一键复制，纯浏览器端。">
+<style>:root{--bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;--accent:#5c3a8a;--accent-hover:#452c6a;--accent-bg:#f5f0fa;--accent-light:#ede0f5}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:Georgia,"Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.7;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");min-height:100vh;display:flex;flex-direction:column}
+nav{position:sticky;top:0;z-index:100;background:rgba(249,248,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+nav .brand{font-weight:700;font-size:15px;color:var(--accent);text-decoration:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+nav .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav .links a{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:11px;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px;transition:.15s}
+nav .links a:hover{color:var(--text);background:var(--accent-light)}
+nav .links a.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+main{flex:1;max-width:860px;margin:0 auto;padding:40px 24px;width:100%}
+h1{font-size:30px;letter-spacing:-.02em;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.ad-banner{max-width:860px;margin:20px auto;padding:12px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:12px}
+.tool-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px}
+.tool-panel label{font-size:12px;font-weight:600;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:8px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+button{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;padding:10px 20px;border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;font-weight:500;background:var(--surface);color:var(--text)}
+button:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.uuid-display{font-family:"SF Mono","Fira Code",monospace;font-size:20px;padding:16px 20px;background:var(--accent-bg);border-radius:10px;word-break:break-all;text-align:center;user-select:all}
+.hash-list{font-family:"SF Mono","Fira Code",monospace;font-size:13px;max-height:400px;overflow-y:auto}
+.hash-list div{padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:.15s;user-select:all}
+.hash-list div:hover{background:var(--accent-light)}
+.hash-list div .num{color:var(--muted);font-size:11px;margin-right:10px}
+input,select{padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);outline:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+input:focus,select:focus{border-color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;margin-top:30px}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:12px;color:var(--muted)}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:12px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:16px 18px;font-size:13px;line-height:1.9;color:var(--text)}
+.guide-content strong{color:var(--accent)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+<script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4785044437048157" crossorigin="anonymous"></script>
+</head><body>
+<nav><a href="../index.html" class="brand">← 工具站</a><div class="links"><a href="../image-compressor/">图片压缩</a><a href="../svg-to-png/">SVG→PNG</a><a href="../image-to-webp/">转WebP</a><a href="../image-resize/">缩放</a><a href="../color-palette/">配色</a><a href="../json-formatter/">JSON</a><a href="../base64/">Base64</a><a href="../markdown-editor/">Markdown</a><a href="../qrcode/">二维码</a><a href="../regex-tester/">正则</a><a href="../uuid-generator/" class="active">UUID</a><a href="../timestamp/">时间戳</a><a href="../text-tools/">文本</a></div></nav>
+<main><h1>🆔 UUID 生成器</h1><p class="subtitle">一键生成 UUID/GUID，支持 V4 随机和批量生成</p>
+<div class="ad-banner">📢 广告位 — Google AdSense</div>
+<details class="guide"><summary>使用说明 · 点击展开</summary><div class="guide-content"><p><strong>🎯 UUID 是什么？</strong><br>一个全球唯一的随机 ID，像 <code>a1b2c3d4-e5f6-7890-abcd-ef1234567890</code>。数据库主键、订单号、文件命名都会用到它。</p><p><strong>📖 怎么用？</strong><br>点「生成一个」得到一个UUID；选好数量点「批量生成」一次生成多个；点任意UUID自动复制；勾选大写和去掉横线可调格式。</p></div></details>
+<div class="tool-panel"><div class="uuid-display" id="mainUUID" onclick="copyUUID(this.textContent)" title="点击复制" style="cursor:pointer">点击下方按钮生成</div><div class="btn-row"><button class="btn-primary" onclick="genOne()">生成一个</button><button onclick="genOne();copyUUID($('#mainUUID').textContent)">生成并复制</button></div></div>
+<div class="tool-panel"><label>批量生成</label><div class="btn-row"><input type="number" id="batchCount" value="10" min="1" max="100" style="width:80px"><select id="format"><option value="lower">小写</option><option value="upper">大写</option><option value="nohyphen">无横线</option></select><button class="btn-primary" onclick="genBatch()">批量生成</button></div><div class="hash-list" id="hashList"></div></div>
+<div class="ad-banner">📢 广告位 — Google AdSense</div></main>
+<footer><p>&copy; 2026 在线工具站 · 纯浏览器端处理</p></footer>
+<div class="toast" id="toast"></div>
+<script>const $=s=>document.querySelector(s);
+function generateUUID(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:(r&0x3|0x8)).toString(16)})}
+function fmtUUID(uuid,fmt){if(fmt==='upper')return uuid.toUpperCase();if(fmt==='nohyphen')return uuid.replace(/-/g,'');return uuid}
+function genOne(){$('#mainUUID').textContent=generateUUID()}
+function genBatch(){const n=parseInt($('#batchCount').value)||10;const fmt=$('#format').value;const uuids=[];for(let i=0;i<Math.min(n,100);i++)uuids.push(fmtUUID(generateUUID(),fmt));$('#hashList').innerHTML=uuids.map((u,i)=>`<div onclick="copyUUID('${u}')" title="点击复制"><span class="num">${String(i+1).padStart(2,'0')}</span>${u}</div>`).join('')}
+function copyUUID(text){if(!text||text==='点击下方按钮生成')return;navigator.clipboard.writeText(text).then(()=>toast('已复制！')).catch(()=>toast('复制失败'))}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+genOne();</script>
+</body></html>
