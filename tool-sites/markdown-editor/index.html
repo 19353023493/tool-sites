@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4785044437048157">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Markdown 编辑器 · 在线工具站</title>
+<meta name="description" content="Markdown 编辑器 — 实时预览，导出HTML，纯浏览器端处理。">
+<style>
+:root{
+  --bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;
+  --accent:#3b82a5;--accent-hover:#2e6a89;--accent-bg:#eef5f9;--accent-light:#dde9f2;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:Georgia,"Noto Serif SC",serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");
+  min-height:100vh;display:flex;flex-direction:column;
+}
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(249,248,246,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:14px 28px;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+nav .brand{font-weight:700;font-size:17px;color:var(--accent);text-decoration:none;letter-spacing:-.01em;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+nav .links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+nav .links a{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:8px;transition:.15s}
+nav .links a:hover{color:var(--text);background:var(--accent-light)}
+nav .links a.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+
+main{flex:1;max-width:1280px;margin:0 auto;padding:48px 28px;width:100%}
+
+h1{font-size:32px;letter-spacing:-.02em;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:15px;margin-bottom:24px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+
+.ad-banner{max-width:1020px;margin:24px auto;padding:14px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:14px}
+
+button{
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;padding:8px 18px;
+  border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:.15s;
+  display:inline-flex;align-items:center;gap:6px;font-weight:500;background:var(--surface);color:var(--text);
+}
+button:hover{background:var(--bg)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+.editor-container{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;min-height:560px}
+.editor-pane,.preview-pane{flex:1;background:var(--surface);}
+.editor-pane textarea{
+  width:100%;height:100%;min-height:560px;padding:20px;font-family:"SF Mono","Fira Code","JetBrains Mono",monospace;
+  font-size:14px;line-height:1.7;border:none;resize:none;outline:none;background:var(--surface);color:var(--text);
+}
+.preview-pane{padding:20px 24px;overflow-y:auto;font-family:"PingFang SC","Microsoft YaHei",sans-serif;}
+.preview-pane h1,.preview-pane h2,.preview-pane h3{font-family:Georgia,"Noto Serif SC",serif;margin:18px 0 8px;letter-spacing:-.01em}
+.preview-pane h1{font-size:28px;border-bottom:2px solid var(--border);padding-bottom:8px}
+.preview-pane h2{font-size:22px}
+.preview-pane h3{font-size:18px}
+.preview-pane p{margin:6px 0}
+.preview-pane code{background:var(--bg);padding:2px 6px;border-radius:4px;font-family:"SF Mono","Fira Code",monospace;font-size:13px}
+.preview-pane pre{background:var(--bg);padding:16px;border-radius:8px;overflow-x:auto;margin:8px 0;border:1px solid var(--border)}
+.preview-pane pre code{background:none;padding:0}
+.preview-pane blockquote{border-left:3px solid var(--accent);padding:4px 14px;color:var(--muted);margin:8px 0}
+.preview-pane ul,.preview-pane ol{padding-left:24px;margin:6px 0}
+.preview-pane a{color:var(--accent)}
+.preview-pane hr{border:none;border-top:1px solid var(--border);margin:20px 0}
+.preview-pane table{border-collapse:collapse;width:100%;margin:8px 0}
+.preview-pane th,.preview-pane td{border:1px solid var(--border);padding:6px 12px;text-align:left}
+.preview-pane img{max-width:100%;border-radius:8px}
+
+.stats{display:flex;gap:20px;margin-top:10px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
+
+footer{border-top:1px solid var(--border);padding:28px;text-align:center;margin-top:40px}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;background:var(--text);color:#fff;padding:10px 22px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+@media(max-width:768px){.editor-container{flex-direction:column}}
+</style>
+<!-- 百度统计 -->
+<script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4785044437048157" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="brand">&#8592; 工具站</a>
+  <div class="links">
+    <a href="../image-compressor/">图片压缩</a><a href="../json-formatter/">JSON 工具</a><a href="../color-palette/">配色方案</a>
+    <a href="../base64/">Base64</a><a href="../markdown-editor/" class="active">Markdown</a><a href="../qrcode/">二维码</a><a href="../regex-tester/">正则</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Markdown 编辑器</h1>
+  <p class="subtitle">左侧编写，右侧实时预览，支持导出 HTML</p>
+
+  <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
+
+  <div class="toolbar">
+    <button onclick="insertBold()" title="粗体 Ctrl+B"><b>B</b></button>
+    <button onclick="insertItalic()" title="斜体 Ctrl+I"><i>I</i></button>
+    <button onclick="insertHeading()" title="标题">H</button>
+    <button onclick="insertCode()" title="代码">&lt;/&gt;</button>
+    <button onclick="insertLink()" title="链接">&#x1F517;</button>
+    <button onclick="insertList()" title="列表">&#x1F4CB;</button>
+    <button onclick="insertQuote()" title="引用">&#x275D;</button>
+    <button onclick="insertHR()" title="分割线">&#x2015;</button>
+    <button onclick="insertTable()" title="表格">&#x2637;</button>
+    <span style="flex:1"></span>
+    <button class="btn-primary" onclick="exportHTML()">导出 HTML</button>
+    <button onclick="loadDemo()">加载示例</button>
+    <button onclick="clearAll()">清空</button>
+  </div>
+
+  <div class="editor-container">
+    <div class="editor-pane">
+      <textarea id="editor" placeholder="输入 Markdown 文本..." oninput="renderMD()"></textarea>
+    </div>
+    <div class="preview-pane" id="preview"></div>
+  </div>
+
+  <div class="stats">
+    <span id="wordCount">0 字</span>
+    <span id="lineCount">0 行</span>
+  </div>
+
+  <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
+</main>
+
+<footer>
+  <div class="footer-links"><a href="../privacy.html">隐私政策</a></div>
+  <p>&copy; 2026 在线工具站 · 纯浏览器端处理</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const editor=$('#editor'),preview=$('#preview');
+
+// Compact markdown parser
+function parseMD(md){
+  if(!md)return'';
+  let h=md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // Code blocks
+  h=h.replace(/```(\w*)\n([\s\S]*?)```/g,(_,lang,code)=>'<pre><code>'+code.replace(/\n$/,'')+'</code></pre>');
+  // Inline code (must be before other inline)
+  h=h.replace(/`([^`]+)`/g,'<code>$1</code>');
+  // Headers
+  h=h.replace(/^#### (.+)$/gm,'<h4>$1</h4>');
+  h=h.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+  h=h.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+  h=h.replace(/^# (.+)$/gm,'<h1>$1</h1>');
+  // Bold/Italic
+  h=h.replace(/\*\*\*(.+?)\*\*\*/g,'<b><i>$1</i></b>');
+  h=h.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  h=h.replace(/\*(.+?)\*/g,'<i>$1</i>');
+  // Images before links
+  h=h.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1">');
+  // Links
+  h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Horizontal rules
+  h=h.replace(/^(---|\*\*\*|___)$/gm,'<hr>');
+  // Blockquotes
+  h=h.replace(/^&gt; (.+)$/gm,'<blockquote>$1</blockquote>');
+  // Unordered lists
+  h=h.replace(/^[\-\*] (.+)$/gm,'<li>$1</li>');
+  h=h.replace(/((?:<li>.*<\/li>\n?)+)/g,'<ul>$1</ul>');
+  // Ordered lists
+  h=h.replace(/^\d+\. (.+)$/gm,'<li>$1</li>');
+  // Tables
+  h=h.replace(/^\|(.+)\|$/gm,(row)=>{
+    const cells=row.split('|').filter(c=>c.trim()).map(c=>c.replace(/^[-:]+$/,'').trim());
+    return cells.every(c=>/^[-:]+$/.test(c))?'':'<tr>'+cells.map(c=>/<td>.*/.test(row)?'<td>'+c+'</td>':'<th>'+c+'</th>').join('')+'</tr>';
+  });
+  h=h.replace(/((?:<tr>.*<\/tr>\n?)+)/g,'<table>$1</table>');
+  // Paragraphs
+  h=h.replace(/^(?!<[a-z]|$)(.+)$/gm,'<p>$1</p>');
+  // Clean up
+  h=h.replace(/<p><\/(h[1-6]|ul|ol|table|pre|blockquote|hr)>/g,'</$1>');
+  h=h.replace(/<(h[1-6]|ul|ol|table|pre|blockquote|hr)>(.*?)<\/p>/g,'<$1>$2</$1>');
+  h=h.replace(/\n{3,}/g,'\n\n');
+  return h;
+}
+
+function renderMD(){
+  const md=editor.value;
+  preview.innerHTML=parseMD(md);
+  const lines=md.split('\n');
+  $('#wordCount').textContent=md.replace(/\s/g,'').length+' 字';
+  $('#lineCount').textContent=lines.length+' 行';
+}
+
+function insertBold(){
+  const ta=editor, s=ta.selectionStart, e=ta.selectionEnd, t=ta.value;
+  ta.value=t.substring(0,s)+'**'+t.substring(s,e)+'**'+t.substring(e);
+  ta.focus();ta.selectionStart=s+2;ta.selectionEnd=e+2;renderMD();
+}
+function insertItalic(){
+  const ta=editor, s=ta.selectionStart, e=ta.selectionEnd, t=ta.value;
+  ta.value=t.substring(0,s)+'*'+t.substring(s,e)+'*'+t.substring(e);
+  ta.focus();ta.selectionStart=s+1;ta.selectionEnd=e+1;renderMD();
+}
+function insertHeading(){
+  const ta=editor, s=ta.selectionStart;
+  const lineStart=ta.value.lastIndexOf('\n',s-1)+1;
+  ta.value=ta.value.substring(0,lineStart)+'## '+ta.value.substring(lineStart);
+  ta.focus();renderMD();
+}
+function insertCode(){
+  const ta=editor, s=ta.selectionStart, e=ta.selectionEnd, t=ta.value;
+  ta.value=t.substring(0,s)+'`'+t.substring(s,e)+'`'+t.substring(e);
+  ta.focus();renderMD();
+}
+function insertLink(){
+  const ta=editor, s=ta.selectionStart, t=ta.value;
+  ta.value=t.substring(0,s)+'[链接文字](https://)'+t.substring(s);
+  ta.focus();renderMD();
+}
+function insertList(){
+  const ta=editor, s=ta.selectionStart;
+  const lineStart=ta.value.lastIndexOf('\n',s-1)+1;
+  ta.value=ta.value.substring(0,lineStart)+'- '+ta.value.substring(lineStart);
+  ta.focus();renderMD();
+}
+function insertQuote(){
+  const ta=editor, s=ta.selectionStart;
+  const lineStart=ta.value.lastIndexOf('\n',s-1)+1;
+  ta.value=ta.value.substring(0,lineStart)+'> '+ta.value.substring(lineStart);
+  ta.focus();renderMD();
+}
+function insertHR(){const ta=editor;ta.value=ta.value+'\n---\n';ta.focus();renderMD()}
+function insertTable(){
+  const ta=editor;
+  ta.value=ta.value+'\n| 列1 | 列2 | 列3 |\n|------|------|------|\n| 内容 | 内容 | 内容 |\n';
+  ta.focus();renderMD();
+}
+
+function exportHTML(){
+  const html=preview.innerHTML;
+  if(!html.trim()){toast('没有可导出的内容');return}
+  const blob=new Blob(['<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:sans-serif;max-width:800px;margin:0 auto;padding:24px;line-height:1.7}</style></head><body>'+html+'</body></html>'],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='markdown.html';a.click();
+  toast('已导出！');
+}
+
+function loadDemo(){
+  editor.value=`# 欢迎使用 Markdown 编辑器
+
+## 基本语法
+
+**粗体** *斜体* \`行内代码\`
+
+### 列表
+
+- 项目一
+- 项目二
+- 项目三
+
+### 引用
+
+> 这是一段引用文字
+
+### 代码块
+
+\`\`\`javascript
+console.log("Hello World!");
+\`\`\`
+
+### 链接
+
+访问 [Google](https://google.com)
+
+### 表格
+
+| 功能 | 状态 |
+|------|------|
+| 实时预览 | ✅ |
+| 导出HTML | ✅ |
+
+---
+
+用左侧编辑器开始写作吧！`;
+  renderMD();toast('示例已加载');
+}
+
+function clearAll(){editor.value='';preview.innerHTML='';$('#wordCount').textContent='0 字';$('#lineCount').textContent='0 行'}
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+// Load demo on start
+loadDemo();
+</script>
+</body>
+</html>

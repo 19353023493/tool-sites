@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-4785044437048157">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Base64 编解码 · 在线工具站</title>
+<meta name="description" content="Base64 编解码工具 — 文本与Base64互转，支持文件上传编码，纯浏览器端处理，安全快捷。">
+<style>
+:root{
+  --bg:#f9f8f6;--surface:#fff;--border:#e8e5de;--text:#2c2c28;--muted:#8b8b7e;
+  --accent:#6b4c8a;--accent-hover:#553a6e;--accent-bg:#f5f0f8;--accent-light:#ede4f5;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:Georgia,"Noto Serif SC",serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.02'/%3E%3C/svg%3E");
+  min-height:100vh;display:flex;flex-direction:column;
+}
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(249,248,246,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:14px 28px;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+nav .brand{font-weight:700;font-size:17px;color:var(--accent);text-decoration:none;letter-spacing:-.01em;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+nav .links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+nav .links a{
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:13px;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:8px;transition:.15s;
+}
+nav .links a:hover{color:var(--text);background:var(--accent-light)}
+nav .links a.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+
+main{flex:1;max-width:1020px;margin:0 auto;padding:48px 28px;width:100%}
+
+h1{font-size:32px;letter-spacing:-.02em;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:15px;margin-bottom:32px;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+
+.tool-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:24px}
+
+label{font-size:13px;font-weight:600;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:8px}
+textarea{
+  width:100%;min-height:160px;padding:14px 16px;font-family:"SF Mono","Fira Code","JetBrains Mono",monospace;
+  font-size:14px;line-height:1.6;border:1px solid var(--border);border-radius:10px;resize:vertical;
+  background:var(--bg);color:var(--text);outline:none;transition:.15s;
+}
+textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button{
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;padding:10px 22px;
+  border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:.15s;
+  display:inline-flex;align-items:center;gap:7px;font-weight:500;
+}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-outline{background:var(--surface);color:var(--text)}
+.btn-outline:hover{background:var(--bg)}
+.btn-sm{font-size:12px;padding:6px 14px}
+
+.file-upload{
+  border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;
+  cursor:pointer;transition:.15s;font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--muted);
+}
+.file-upload:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.file-upload input{display:none}
+.file-upload svg{display:block;margin:0 auto 8px;opacity:.5}
+
+.stats{display:flex;gap:24px;flex-wrap:wrap;margin-top:12px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
+
+.ad-banner{max-width:1020px;margin:24px auto;padding:14px;text-align:center;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:14px}
+
+footer{border-top:1px solid var(--border);padding:28px;text-align:center}
+footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;
+  background:var(--text);color:#fff;padding:10px 22px;border-radius:10px;
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;
+}
+.toast.show{opacity:1}
+</style>
+<!-- 百度统计 -->
+<script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4785044437048157" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="brand">&#8592; 工具站</a>
+  <div class="links">
+    <a href="../image-compressor/">图片压缩</a>
+    <a href="../json-formatter/">JSON 工具</a>
+    <a href="../color-palette/">配色方案</a>
+    <a href="../base64/" class="active">Base64</a>
+    <a href="../markdown-editor/">Markdown</a>
+    <a href="../qrcode/">二维码</a>
+    <a href="../regex-tester/">正则</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Base64 编解码</h1>
+  <p class="subtitle">文本与 Base64 互转，支持文件上传编码，所有操作在浏览器本地完成</p>
+
+  <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
+
+  <div class="tool-panel">
+    <label>输入文本</label>
+    <textarea id="input" placeholder="输入要编码/解码的文本..."></textarea>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="encode()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>编码 Encode
+      </button>
+      <button class="btn-primary" onclick="decode()" style="background:#4f6d8c;border-color:#4f6d8c">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 7h3l-3 5h3"/><path d="M14 7h3v5"/></svg>解码 Decode
+      </button>
+      <button class="btn-outline" onclick="swap()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>交换
+      </button>
+      <button class="btn-outline" onclick="copyResult()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制结果
+      </button>
+      <button class="btn-outline btn-sm" onclick="clearAll()">清空</button>
+    </div>
+  </div>
+
+  <div class="tool-panel">
+    <label>输出结果</label>
+    <textarea id="output" placeholder="结果将显示在这里..." readonly style="background:var(--accent-bg)"></textarea>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="tool-panel">
+    <label>文件上传编码</label>
+    <div class="file-upload" id="dropZone">
+      <input type="file" id="fileInput" onchange="handleFile(this)">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <span>点击或拖拽文件到这里 — 最大 10MB</span>
+    </div>
+  </div>
+
+  <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="../privacy.html">隐私政策</a>
+  </div>
+  <p>&copy; 2026 在线工具站 · 纯浏览器端处理，文件不上传</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const input=$('#input'),output=$('#output'),stats=$('#stats');
+let currentMode='encode';
+
+function encode(){
+  const val=input.value.trim();
+  if(!val){toast('请输入文本');return}
+  try{
+    output.value=btoa(unescape(encodeURIComponent(val)));
+    currentMode='encode';
+    updateStats();
+  }catch(e){toast('编码失败：'+e.message)}
+}
+
+function decode(){
+  const val=input.value.trim();
+  if(!val){toast('请输入 Base64 文本');return}
+  try{
+    output.value=decodeURIComponent(escape(atob(val)));
+    currentMode='decode';
+    updateStats();
+  }catch(e){toast('解码失败：请检查输入是否为有效的 Base64 格式')}
+}
+
+function swap(){
+  const t=input.value;
+  input.value=output.value;
+  output.value=t;
+  currentMode=currentMode==='encode'?'decode':'encode';
+  updateStats();
+}
+
+function copyResult(){
+  const val=output.value;
+  if(!val){toast('没有可复制的结果');return}
+  navigator.clipboard.writeText(val).then(()=>toast('已复制！')).catch(()=>{
+    output.select();document.execCommand('copy');toast('已复制！');
+  });
+}
+
+function clearAll(){input.value='';output.value='';stats.textContent=''}
+
+function updateStats(){
+  const inLen=input.value.length,outLen=output.value.length;
+  stats.innerHTML=`
+    <span>输入：${fmtSize(inLen)} 字符</span>
+    <span>输出：${fmtSize(outLen)} 字符</span>
+    ${outLen>0&&inLen>0?`<span>比率：${Math.round(outLen/inLen*100)}%</span>`:''}
+    <span>模式：${currentMode==='encode'?'编码':'解码'}</span>
+  `;
+}
+
+function handleFile(inp){
+  const f=inp.files[0];
+  if(!f)return;
+  if(f.size>10*1024*1024){toast('文件最大 10MB');return}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const b64=reader.result.split(',')[1];
+    output.value=b64;
+    currentMode='encode';
+    updateStats();
+    toast(`已编码：${f.name} (${fmtSize(f.size)})`);
+  };
+  reader.readAsDataURL(f);
+}
+
+const dz=$('#dropZone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.style.borderColor='var(--accent)'});
+dz.addEventListener('dragleave',()=>dz.style.borderColor='');
+dz.addEventListener('drop',e=>{
+  e.preventDefault();dz.style.borderColor='';
+  const f=e.dataTransfer.files[0];
+  if(f){$('#fileInput').files=e.dataTransfer.files;handleFile($('#fileInput'))}
+});
+
+function fmtSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB'}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+</script>
+</body>
+</html>
