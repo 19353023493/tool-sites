@@ -100,6 +100,16 @@ footer a:hover{text-decoration:underline}
 .toast.show{opacity:1}
 
 @media(max-width:768px){.regex-row{flex-direction:column}}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:14px 20px;cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:18px 20px;font-size:14px;line-height:1.9;color:var(--text)}
+.guide-content strong{color:var(--accent)}
+.guide-content p{margin:8px 0}
+.guide-content ul{margin:6px 0 6px 18px}
+.guide-content li{margin:4px 0}
 </style>
 <!-- 百度统计 -->
 <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
@@ -119,6 +129,15 @@ footer a:hover{text-decoration:underline}
 <main>
   <h1>正则表达式测试器</h1>
   <p class="subtitle">实时测试正则表达式，匹配高亮，支持捕获组查看</p>
+
+  <details class="guide">
+  <summary>使用说明 · 点击展开</summary>
+  <div class="guide-content">
+  <p><strong>&#x1F3AF; 正则表达式是什么？</strong><br>一种用特殊符号描述文字规律的表达式。比如 <code>\d+</code> 表示"一串数字"，可以用来从文章里快速找出所有电话号码、邮箱、网址等。</p>
+  <p><strong>&#x1F4D6; 怎么用？</strong><br>在上方输入正则表达式（或点下面的常用范例），下方粘贴要搜索的文本，匹配到的内容会自动高亮并列出。改一下正则或文本，结果实时刷新。</p>
+  <p><strong>&#x1F4A1; 什么时候用？</strong><br>批量提取数据（从网页里抓邮箱、手机号）、验证用户输入格式（手机/邮箱是否合法）、文本替换和清洗。</p>
+  </div>
+  </details>
 
   <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
 

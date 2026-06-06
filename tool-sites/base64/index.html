@@ -86,6 +86,16 @@ footer a:hover{text-decoration:underline}
   opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;
 }
 .toast.show{opacity:1}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:14px 20px;cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:18px 20px;font-size:14px;line-height:1.9;color:var(--text)}
+.guide-content strong{color:var(--accent)}
+.guide-content p{margin:8px 0}
+.guide-content ul{margin:6px 0 6px 18px}
+.guide-content li{margin:4px 0}
 </style>
 <!-- 百度统计 -->
 <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
@@ -110,6 +120,15 @@ footer a:hover{text-decoration:underline}
 <main>
   <h1>Base64 编解码</h1>
   <p class="subtitle">文本与 Base64 互转，支持文件上传编码，所有操作在浏览器本地完成</p>
+
+  <details class="guide">
+  <summary>使用说明 · 点击展开</summary>
+  <div class="guide-content">
+  <p><strong>🎯 Base64 是什么？</strong><br>一种把文字、图片、文件变成纯英文数字的格式。就像把中文翻译成拼音一样，方便在网络上传输。</p>
+  <p><strong>📖 怎么用？</strong><br>在上方输入框粘贴文字 → 点「编码」变成 Base64；反过来粘贴 Base64 → 点「解码」还原。<br>想编码图片？直接把图片文件拖到下方便捷区域即可。</p>
+  <p><strong>💡 什么时候用？</strong><br>把图片嵌到网页代码里、邮件附件转文本、微信发长消息不乱码、API 数据传输。</p>
+  </div>
+  </details>
 
   <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
 

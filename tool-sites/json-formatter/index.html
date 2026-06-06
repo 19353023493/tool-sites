@@ -87,6 +87,16 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
 footer a{color:var(--accent);text-decoration:none}
 footer a:hover{text-decoration:underline}
 .footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:14px 20px;cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:#eef2f7}
+.guide-content{padding:18px 20px;font-size:14px;line-height:1.9;color:var(--text)}
+.guide-content strong{color:var(--accent)}
+.guide-content p{margin:8px 0}
+.guide-content ul{margin:6px 0 6px 18px}
+.guide-content li{margin:4px 0}
 </style>
 <!-- 百度统计 -->
 <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
@@ -126,6 +136,15 @@ footer a:hover{text-decoration:underline}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>示例
     </button>
   </div>
+
+  <details class="guide" style="max-width:1100px;margin-left:auto;margin-right:auto">
+  <summary>使用说明 · 点击展开</summary>
+  <div class="guide-content">
+  <p><strong>🎯 JSON 是什么？</strong><br>一种用花括号和方括号储存数据的格式，是网页和 App 之间传数据的"通用语言"。比如 <code>{"姓名":"张三","年龄":25}</code>，看起来就像填好的表格。</p>
+  <p><strong>📖 怎么用？</strong><br>上方5个按钮切换功能：<b>格式化</b>让乱码变整齐，<b>压缩</b>缩小体积方便传输，<b>校验</b>检查语法是否正确，<b>树形</b>可折叠浏览结构，<b>CSV</b>转成表格导出。</p>
+  <p><strong>💡 什么时候用？</strong><br>查看接口返回数据、调试代码、导出数据到 Excel、格式化别人发来的一团乱麻 JSON。</p>
+  </div>
+  </details>
 
   <div class="ad-banner">📢 广告位 — 百度联盟</div>
 

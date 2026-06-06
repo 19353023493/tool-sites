@@ -84,6 +84,16 @@ footer a:hover{text-decoration:underline}
 .toast.show{opacity:1}
 
 @media(max-width:768px){.editor-container{flex-direction:column}}
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;overflow:hidden;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.guide summary{padding:14px 20px;cursor:pointer;font-size:14px;font-weight:600;color:var(--accent);user-select:none;list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::before{content:'💡 '}
+.guide[open] summary{border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.guide-content{padding:18px 20px;font-size:14px;line-height:1.9;color:var(--text)}
+.guide-content strong{color:var(--accent)}
+.guide-content p{margin:8px 0}
+.guide-content ul{margin:6px 0 6px 18px}
+.guide-content li{margin:4px 0}
 </style>
 <!-- 百度统计 -->
 <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?8c9178516dd9313730319302494ed028";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
@@ -103,6 +113,15 @@ footer a:hover{text-decoration:underline}
 <main>
   <h1>Markdown 编辑器</h1>
   <p class="subtitle">左侧编写，右侧实时预览，支持导出 HTML</p>
+
+  <details class="guide">
+  <summary>使用说明 · 点击展开</summary>
+  <div class="guide-content">
+  <p><strong>&#x1F3AF; Markdown 是什么？</strong><br>一种用简单符号写排版的格式。比如用 <code>**粗体**</code> 表示<b>粗体</b>，用 <code># 标题</code> 表示大标题。写完后可以变成漂亮的网页，广泛用于写文档、笔记、博客。</p>
+  <p><strong>&#x1F4D6; 怎么用？</strong><br>左侧输入文字，右侧自动显示排版效果。上方工具栏可以快速插入粗体、斜体、链接、表格等。写完后点「导出 HTML」保存成网页文件。</p>
+  <p><strong>&#x1F4A1; 什么时候用？</strong><br>写项目文档、记学习笔记、发技术博客、生成漂亮的说明页面。GitHub、知乎、CSDN 等平台都支持 Markdown。</p>
+  </div>
+  </details>
 
   <div class="ad-banner">&#x1F4E2; 广告位 — Google AdSense</div>
 
