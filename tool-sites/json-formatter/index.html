@@ -101,15 +101,21 @@ footer a:hover{text-decoration:underline}
 
 <main>
   <div class="toolbar">
-    <button class="active" data-mode="format">✨ 格式化</button>
-    <button data-mode="minify">📦 压缩</button>
-    <button data-mode="validate">✓ 校验</button>
-    <button data-mode="tree">🌳 树形</button>
-    <button data-mode="csv">📊 CSV</button>
+    <button class="active" data-mode="format">格式化</button>
+    <button data-mode="minify">压缩</button>
+    <button data-mode="validate">校验</button>
+    <button data-mode="tree">树形</button>
+    <button data-mode="csv">CSV</button>
     <span class="sep"></span>
-    <button onclick="copyOutput()">📋 复制</button>
-    <button onclick="clearAll()">🗑 清空</button>
-    <button onclick="loadSample()">📥 示例</button>
+    <button onclick="copyOutput()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制
+    </button>
+    <button onclick="clearAll()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>清空
+    </button>
+    <button onclick="loadSample()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>示例
+    </button>
   </div>
 
   <div class="ad-banner">📢 广告位 — 百度联盟</div>
