@@ -155,7 +155,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="tool-panel">
     <div class="qr-result" id="qrResult">
-      <img id="qrImage" style="max-width:100%" alt="二维码">
+      <div id="qrResult" style="text-align:center"></div>
     </div>
   </div>
 
@@ -174,34 +174,68 @@ footer a:hover{text-decoration:underline}
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.bootcdn.net/ajax/libs/qrcode-generator/1.4.0/qrcode.min.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 let history=JSON.parse(localStorage.getItem('qr_history')||'[]');
 let debounceTimer;
-const qrImage=$('#qrImage');
 
 function generateQR(){
   const text=$('#textInput').value.trim();
-  if(!text){$('#qrResult').innerHTML='<p style="color:var(--muted);text-align:center;padding:40px">请输入文本或网址</p>';return}
+  const resultDiv=$('#qrResult');
+  if(!text){resultDiv.innerHTML='<p style="color:var(--muted);text-align:center;padding:40px">请输入文本或网址</p>';return}
 
   const size=parseInt($('#sizeSelect').value);
-  const fg=$('#fgColor').value.replace('#','');
-  const bg=$('#bgColor').value.replace('#','');
+  const fg=$('#fgColor').value;
+  const bg=$('#bgColor').value;
 
-  // Use goQR.me API - reliable and fast
-  const url=`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${fg}&bgcolor=${bg}&margin=10`;
-  qrImage.src=url;
-  qrImage.onload=()=>{addHistory(text);toast('二维码已生成')};
-  qrImage.onerror=()=>toast('生成失败，请检查网络连接');
+  try{
+    // Use qrcode-generator library (embedded from CDN)
+    const typeNumber=0; // auto-detect
+    const errorCorrection='M';
+    const qr=qrgenerator(typeNumber,errorCorrection);
+    qr.addData(text);
+    qr.make();
+    const moduleCount=qr.getModuleCount();
+    const cellSize=Math.floor(size/moduleCount);
+    const margin=Math.floor((size-moduleCount*cellSize)/2);
+
+    // Create canvas
+    const canvas=document.createElement('canvas');
+    canvas.width=size;canvas.height=size;
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,size,size);
+    ctx.fillStyle=fg;
+
+    for(let row=0;row<moduleCount;row++){
+      for(let col=0;col<moduleCount;col++){
+        if(qr.isDark(row,col)){
+          ctx.fillRect(margin+col*cellSize,margin+row*cellSize,cellSize,cellSize);
+        }
+      }
+    }
+
+    // Add white border
+    resultDiv.innerHTML='';
+    canvas.style.maxWidth='100%';
+    canvas.style.borderRadius='8px';
+    canvas.style.boxShadow='0 2px 12px rgba(0,0,0,.08)';
+    canvas.style.border='8px solid #fff';
+    resultDiv.appendChild(canvas);
+
+    // Store canvas for download
+    canvas.id='qrGenerated';
+    addHistory(text);
+    toast('二维码已生成');
+  }catch(e){
+    resultDiv.innerHTML='<p style="color:#c0392b;text-align:center;padding:20px">生成失败，请检查输入内容或缩短文本</p>';
+    console.error('QR error:',e);
+  }
 }
 
 function downloadQR(){
-  const img=qrImage;
-  if(!img.complete||!img.naturalWidth){toast('请先生成二维码');return}
-  const canvas=document.createElement('canvas');
-  canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
-  const ctx=canvas.getContext('2d');
-  ctx.drawImage(img,0,0);
+  const canvas=document.getElementById('qrGenerated');
+  if(!canvas){toast('请先生成二维码');return}
   const a=document.createElement('a');
   a.href=canvas.toDataURL('image/png');a.download='qrcode.png';a.click();
   toast('已下载');
@@ -232,8 +266,8 @@ function debounceGenerate(){
 
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 
-// Initial generate
-generateQR();
+// Generate on load
+setTimeout(generateQR,300);
 renderHistory();
 </script>
 </body>
