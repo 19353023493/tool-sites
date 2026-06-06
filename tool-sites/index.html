@@ -56,21 +56,51 @@ nav .links a:hover{color:var(--text);background:rgba(0,0,0,.03)}
 }
 .tool-card:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgba(0,0,0,.04),0 12px 32px rgba(0,0,0,.06)}
 .tool-card .accent-line{position:absolute;top:0;left:0;right:0;height:3px}
-.tool-card:nth-child(1) .accent-line{background:var(--green)}
-.tool-card:nth-child(2) .accent-line{background:var(--slate)}
-.tool-card:nth-child(3) .accent-line{background:var(--amber)}
+.tool-card:nth-child(1) .accent-line{background:var(--amber)}
+.tool-card:nth-child(2) .accent-line{background:var(--green)}
+.tool-card:nth-child(3) .accent-line{background:var(--slate)}
+.tool-card:nth-child(4) .accent-line{background:var(--blue)}
+.tool-card:nth-child(5) .accent-line{background:var(--green)}
+.tool-card:nth-child(6) .accent-line{background:var(--slate)}
+.tool-card:nth-child(7) .accent-line{background:var(--blue)}
+.tool-card:nth-child(8) .accent-line{background:var(--slate)}
+.tool-card:nth-child(9) .accent-line{background:var(--green)}
+.tool-card:nth-child(10) .accent-line{background:var(--blue)}
+.tool-card:nth-child(11) .accent-line{background:var(--slate)}
+.tool-card:nth-child(12) .accent-line{background:var(--amber)}
+.tool-card:nth-child(13) .accent-line{background:var(--green)}
 .tool-card .icon-block{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}
-.tool-card:nth-child(1) .icon-block{background:#eaf5ef;color:var(--green)}
-.tool-card:nth-child(2) .icon-block{background:#eef2f7;color:var(--slate)}
-.tool-card:nth-child(3) .icon-block{background:#fdf4ea;color:var(--amber)}
+.tool-card:nth-child(1) .icon-block{background:#fdf4ea;color:var(--amber)}
+.tool-card:nth-child(2) .icon-block{background:#eaf5ef;color:var(--green)}
+.tool-card:nth-child(3) .icon-block{background:#eef2f7;color:var(--slate)}
+.tool-card:nth-child(4) .icon-block{background:#e8f0f8;color:var(--blue)}
+.tool-card:nth-child(5) .icon-block{background:#eaf5ef;color:var(--green)}
+.tool-card:nth-child(6) .icon-block{background:#eef2f7;color:var(--slate)}
+.tool-card:nth-child(7) .icon-block{background:#e8f0f8;color:var(--blue)}
+.tool-card:nth-child(8) .icon-block{background:#eef2f7;color:var(--slate)}
+.tool-card:nth-child(9) .icon-block{background:#eaf5ef;color:var(--green)}
+.tool-card:nth-child(10) .icon-block{background:#e8f0f8;color:var(--blue)}
+.tool-card:nth-child(11) .icon-block{background:#eef2f7;color:var(--slate)}
+.tool-card:nth-child(12) .icon-block{background:#fdf4ea;color:var(--amber)}
+.tool-card:nth-child(13) .icon-block{background:#eaf5ef;color:var(--green)}
 .tool-card h3{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:19px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
 .tool-card .desc{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:16px}
 .tool-card .feature-list{list-style:none;font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;color:var(--muted)}
 .tool-card .feature-list li{margin-bottom:5px;display:flex;align-items:center;gap:8px}
 .tool-card .feature-list li::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.tool-card:nth-child(1) .feature-list li::before{background:var(--green)}
-.tool-card:nth-child(2) .feature-list li::before{background:var(--slate)}
-.tool-card:nth-child(3) .feature-list li::before{background:var(--amber)}
+.tool-card:nth-child(1) .feature-list li::before{background:var(--amber)}
+.tool-card:nth-child(2) .feature-list li::before{background:var(--green)}
+.tool-card:nth-child(3) .feature-list li::before{background:var(--slate)}
+.tool-card:nth-child(4) .feature-list li::before{background:var(--blue)}
+.tool-card:nth-child(5) .feature-list li::before{background:var(--green)}
+.tool-card:nth-child(6) .feature-list li::before{background:var(--slate)}
+.tool-card:nth-child(7) .feature-list li::before{background:var(--blue)}
+.tool-card:nth-child(8) .feature-list li::before{background:var(--slate)}
+.tool-card:nth-child(9) .feature-list li::before{background:var(--green)}
+.tool-card:nth-child(10) .feature-list li::before{background:var(--blue)}
+.tool-card:nth-child(11) .feature-list li::before{background:var(--slate)}
+.tool-card:nth-child(12) .feature-list li::before{background:var(--amber)}
+.tool-card:nth-child(13) .feature-list li::before{background:var(--green)}
 /* Why section */
 .why-section{margin-top:72px;text-align:center}
 .why-section h2{font-size:28px;font-weight:400;letter-spacing:-.01em;margin-bottom:8px}
@@ -153,37 +183,7 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
   <div class="ad-banner">📢 广告位 — 百度联盟</div>
 
   <div class="tools-grid">
-    <!-- 图片工具 — 流量最高 -->
-    <a class="tool-card" href="svg-to-png/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16.5h18"/><path d="M12 3v18"/></svg></div>
-      <h3>SVG → PNG</h3>
-      <p class="desc">粘贴SVG代码或上传文件，一键转高清PNG，可自定义尺寸。</p>
-      <ul class="feature-list"><li>粘贴代码或上传文件</li><li>自定义输出尺寸</li><li>纯浏览器端渲染</li></ul>
-    </a>
-    <a class="tool-card" href="image-to-webp/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="m7 16 4-8 4 4 3-3"/></svg></div>
-      <h3>图片转 WebP</h3>
-      <p class="desc">PNG/JPG → WebP，体积更小画质无损，可调质量。</p>
-      <ul class="feature-list"><li>拖拽上传</li><li>调节转换质量</li><li>对比前后体积</li></ul>
-    </a>
-    <a class="tool-card" href="image-compressor/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
-      <h3>图片压缩</h3>
-      <p class="desc">拖拽上传，自由调节压缩质量，对比前后效果。支持 PNG / JPG / WebP。</p>
-      <ul class="feature-list"><li>拖拽或点击上传</li><li>实时预览压缩效果</li><li>可选输出格式</li></ul>
-    </a>
-    <a class="tool-card" href="image-resize/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 3v18M3 3h18"/></svg></div>
-      <h3>图片缩放裁切</h3>
-      <p class="desc">按像素缩放图片，锁定比例，支持PNG/JPG/WebP输出。</p>
-      <ul class="feature-list"><li>像素级精确缩放</li><li>锁定宽高比</li><li>多格式输出</li></ul>
-    </a>
-
-    <!-- 日常高频 -->
+    <!-- 1. 二维码 — 流量最高 -->
     <a class="tool-card" href="qrcode/">
       <div class="accent-line"></div>
       <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="15" y="15" width="2" height="2"/><rect x="19" y="15" width="2" height="2"/><rect x="15" y="19" width="2" height="2"/><rect x="19" y="19" width="2" height="2"/></svg></div>
@@ -191,6 +191,15 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
       <p class="desc">文本 / URL 一键生成二维码，可调颜色尺寸，下载 PNG 图片。</p>
       <ul class="feature-list"><li>文本/URL 转二维码</li><li>颜色 & 尺寸可调</li><li>下载高清 PNG</li></ul>
     </a>
+    <!-- 2. 图片压缩 — 高频需求 -->
+    <a class="tool-card" href="image-compressor/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
+      <h3>图片压缩</h3>
+      <p class="desc">拖拽上传，自由调节压缩质量，对比前后效果。支持 PNG / JPG / WebP。</p>
+      <ul class="feature-list"><li>拖拽或点击上传</li><li>实时预览压缩效果</li><li>可选输出格式</li></ul>
+    </a>
+    <!-- 3. JSON — 开发者日常 -->
     <a class="tool-card" href="json-formatter/">
       <div class="accent-line"></div>
       <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg></div>
@@ -198,29 +207,7 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
       <p class="desc">格式化、压缩、校验、树形查看、导出 CSV。开发者日常必备。</p>
       <ul class="feature-list"><li>格式化 & 压缩</li><li>语法错误提示</li><li>树形结构 & CSV 导出</li></ul>
     </a>
-
-    <!-- 开发工具 -->
-    <a class="tool-card" href="timestamp/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-      <h3>时间戳转换</h3>
-      <p class="desc">Unix时间戳 ↔ 日期时间互转，支持秒/毫秒，实时显示当前戳。</p>
-      <ul class="feature-list"><li>时间戳转日期</li><li>日期转时间戳</li><li>实时当前时间戳</li></ul>
-    </a>
-    <a class="tool-card" href="uuid-generator/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 7h8l-4 10z"/></svg></div>
-      <h3>UUID 生成器</h3>
-      <p class="desc">一键生成UUID/GUID，支持批量生成，点击即复制，开发必备。</p>
-      <ul class="feature-list"><li>一键生成UUID</li><li>批量生成（最多100个）</li><li>点击复制</li></ul>
-    </a>
-    <a class="tool-card" href="regex-tester/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
-      <h3>正则表达式测试</h3>
-      <p class="desc">实时匹配高亮，支持捕获组查看。内置常用正则以供参考。</p>
-      <ul class="feature-list"><li>实时匹配 & 高亮</li><li>捕获组显示</li><li>8 个常用正则参考</li></ul>
-    </a>
+    <!-- 4. Base64 — 开发者高频 -->
     <a class="tool-card" href="base64/">
       <div class="accent-line"></div>
       <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="M15 5l4 4"/></svg></div>
@@ -228,8 +215,55 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
       <p class="desc">文本与 Base64 互转，支持文件上传编码。开发调试、数据传输必备。</p>
       <ul class="feature-list"><li>编码 / 解码相互转换</li><li>文件上传转 Base64</li><li>一键复制结果</li></ul>
     </a>
-
-    <!-- 文本 & 设计 -->
+    <!-- 5. 图片转 WebP -->
+    <a class="tool-card" href="image-to-webp/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="m7 16 4-8 4 4 3-3"/></svg></div>
+      <h3>图片转 WebP</h3>
+      <p class="desc">PNG/JPG → WebP，体积更小画质无损，可调质量。</p>
+      <ul class="feature-list"><li>拖拽上传</li><li>调节转换质量</li><li>对比前后体积</li></ul>
+    </a>
+    <!-- 6. 时间戳 -->
+    <a class="tool-card" href="timestamp/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <h3>时间戳转换</h3>
+      <p class="desc">Unix时间戳 ↔ 日期时间互转，支持秒/毫秒，实时显示当前戳。</p>
+      <ul class="feature-list"><li>时间戳转日期</li><li>日期转时间戳</li><li>实时当前时间戳</li></ul>
+    </a>
+    <!-- 7. UUID -->
+    <a class="tool-card" href="uuid-generator/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 7h8l-4 10z"/></svg></div>
+      <h3>UUID 生成器</h3>
+      <p class="desc">一键生成UUID/GUID，支持批量生成，点击即复制，开发必备。</p>
+      <ul class="feature-list"><li>一键生成UUID</li><li>批量生成（最多100个）</li><li>点击复制</li></ul>
+    </a>
+    <!-- 8. 正则 -->
+    <a class="tool-card" href="regex-tester/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <h3>正则表达式测试</h3>
+      <p class="desc">实时匹配高亮，支持捕获组查看。内置常用正则以供参考。</p>
+      <ul class="feature-list"><li>实时匹配 & 高亮</li><li>捕获组显示</li><li>8 个常用正则参考</li></ul>
+    </a>
+    <!-- 9. 图片缩放 -->
+    <a class="tool-card" href="image-resize/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 3v18M3 3h18"/></svg></div>
+      <h3>图片缩放裁切</h3>
+      <p class="desc">按像素缩放图片，锁定比例，支持PNG/JPG/WebP输出。</p>
+      <ul class="feature-list"><li>像素级精确缩放</li><li>锁定宽高比</li><li>多格式输出</li></ul>
+    </a>
+    <!-- 10. SVG → PNG -->
+    <a class="tool-card" href="svg-to-png/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16.5h18"/><path d="M12 3v18"/></svg></div>
+      <h3>SVG → PNG</h3>
+      <p class="desc">粘贴SVG代码或上传文件，一键转高清PNG，可自定义尺寸。</p>
+      <ul class="feature-list"><li>粘贴代码或上传文件</li><li>自定义输出尺寸</li><li>纯浏览器端渲染</li></ul>
+    </a>
+    <!-- 11. Markdown -->
     <a class="tool-card" href="markdown-editor/">
       <div class="accent-line"></div>
       <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
@@ -237,19 +271,21 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
       <p class="desc">左侧编写、右侧实时预览，支持导出 HTML。写文档、记笔记专用。</p>
       <ul class="feature-list"><li>分屏实时预览</li><li>快捷工具栏</li><li>导出 HTML 文件</li></ul>
     </a>
-    <a class="tool-card" href="text-tools/">
-      <div class="accent-line"></div>
-      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-      <h3>文本工具箱</h3>
-      <p class="desc">文本去重排序、大小写转换、URL编解码，三合一文本工具。</p>
-      <ul class="feature-list"><li>去重 & 排序</li><li>大小写转换</li><li>URL 编解码</li></ul>
-    </a>
+    <!-- 12. 配色方案 -->
     <a class="tool-card" href="color-palette/">
       <div class="accent-line"></div>
       <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="2" r="2"/><circle cx="12" cy="22" r="2"/><circle cx="2" cy="12" r="2"/><circle cx="22" cy="12" r="2"/><circle cx="4.9" cy="4.9" r="2"/><circle cx="19.1" cy="19.1" r="2"/></svg></div>
       <h3>配色方案</h3>
       <p class="desc">智能生成配色、从图片提取色调、CSS渐变、设计趋势色板。</p>
       <ul class="feature-list"><li>AI 智能配色</li><li>图片取色</li><li>渐变 & 趋势色板</li></ul>
+    </a>
+    <!-- 13. 文本工具箱 -->
+    <a class="tool-card" href="text-tools/">
+      <div class="accent-line"></div>
+      <div class="icon-block"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <h3>文本工具箱</h3>
+      <p class="desc">文本去重排序、大小写转换、URL编解码，三合一文本工具。</p>
+      <ul class="feature-list"><li>去重 & 排序</li><li>大小写转换</li><li>URL 编解码</li></ul>
     </a>
   </div>
 
@@ -303,10 +339,10 @@ footer p{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:13px;c
     <h3>更多工具即将上线</h3>
     <p>下面这些正在开发中</p>
     <div class="coming-row">
-      <span class="coming-badge">🔤 Base64 编解码</span>
-      <span class="coming-badge">📝 正则测试器</span>
-      <span class="coming-badge">📋 Markdown 编辑器</span>
-      <span class="coming-badge">📱 二维码生成</span>
+      <span class="coming-badge">🔍 文本差异对比</span>
+      <span class="coming-badge">📐 单位换算</span>
+      <span class="coming-badge">🎨 颜色格式转换</span>
+      <span class="coming-badge">💬 意见反馈</span>
     </div>
   </div>
 
